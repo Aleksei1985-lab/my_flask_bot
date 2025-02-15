@@ -1,0 +1,9 @@
+● celery.service - Celery Service
+     Loaded: loaded (]8;;file://cv4398397.novalocal/etc/systemd/system/celery.service/etc/systemd/system/celery.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: activating (auto-restart) (Result: exit-code) since Mon 2025-02-10 09:49:33 MSK; 26ms ago
+    Process: 355146 ExecStart=/root/my_flask_bot/venv/bin/celery -A celery_app.celery worker --loglevel=info [0;1;31m(code=exited, status=200/CHDIR)[0m
+   Main PID: 355146 (code=exited, status=200/CHDIR)
+        CPU: 2ms
+
+Feb 10 09:49:33 cv4398397.novalocal systemd[1]: [0;1;39m[0;1;31m[0;1;39mcelery.service: Main process exited, code=exited, status=200/CHDIR[0m
+Feb 10 09:49:33 cv4398397.novalocal systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcelery.service: Failed with result 'exit-code'.[0m

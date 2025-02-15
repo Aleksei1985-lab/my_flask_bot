@@ -1,0 +1,13 @@
+[0;1;31m×[0m myapp.service - My Flask Application
+     Loaded: loaded (]8;;file://cv4398397.novalocal/etc/systemd/system/myapp.service/etc/systemd/system/myapp.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;31mfailed[0m (Result: exit-code) since Thu 2025-02-06 01:03:34 MSK; 14s ago
+   Duration: 11ms
+   Main PID: 871948 (code=exited, status=203/EXEC)
+        CPU: 2ms
+
+Feb 06 01:03:34 cv4398397.novalocal systemd[1]: [0;1;39m[0;1;31m[0;1;39mmyapp.service: Main process exited, code=exited, status=203/EXEC[0m
+Feb 06 01:03:34 cv4398397.novalocal systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mmyapp.service: Failed with result 'exit-code'.[0m
+Feb 06 01:03:34 cv4398397.novalocal systemd[1]: myapp.service: Scheduled restart job, restart counter is at 5.
+Feb 06 01:03:34 cv4398397.novalocal systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mmyapp.service: Start request repeated too quickly.[0m
+Feb 06 01:03:34 cv4398397.novalocal systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mmyapp.service: Failed with result 'exit-code'.[0m
+Feb 06 01:03:34 cv4398397.novalocal systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start myapp.service - My Flask Application.[0m

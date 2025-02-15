@@ -1,0 +1,18 @@
+[0;1;31m×[0m flask_app.service - Flask Web Application
+     Loaded: loaded (]8;;file://cv4398397.novalocal/etc/systemd/system/flask_app.service/etc/systemd/system/flask_app.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;31mfailed[0m (Result: exit-code) since Tue 2025-02-04 06:36:48 MSK; 6s ago
+   Duration: 355ms
+    Process: 713357 ExecStart=/root/my_flask_bot/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:5000 > [0;1;31m(code=exited, status=3)[0m
+   Main PID: 713357 (code=exited, status=3)
+        CPU: 241ms
+
+Feb 04 06:36:48 cv4398397.novalocal gunicorn[713360]:   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+Feb 04 06:36:48 cv4398397.novalocal gunicorn[713360]:   File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+Feb 04 06:36:48 cv4398397.novalocal gunicorn[713360]: ModuleNotFoundError: No module named '>'
+Feb 04 06:36:48 cv4398397.novalocal gunicorn[713360]: [2025-02-04 06:36:48 +0300] [713360] [INFO] Worker exiting (pid: 713360)
+Feb 04 06:36:48 cv4398397.novalocal gunicorn[713357]: [2025-02-04 06:36:48 +0300] [713357] [ERROR] Worker (pid:713359) exited with code 3
+Feb 04 06:36:48 cv4398397.novalocal gunicorn[713357]: [2025-02-04 06:36:48 +0300] [713357] [ERROR] Worker (pid:713360) was sent SIGTERM!
+Feb 04 06:36:48 cv4398397.novalocal gunicorn[713357]: [2025-02-04 06:36:48 +0300] [713357] [ERROR] Shutting down: Master
+Feb 04 06:36:48 cv4398397.novalocal gunicorn[713357]: [2025-02-04 06:36:48 +0300] [713357] [ERROR] Reason: Worker failed to boot.
+Feb 04 06:36:48 cv4398397.novalocal systemd[1]: [0;1;39m[0;1;31m[0;1;39mflask_app.service: Main process exited, code=exited, status=3/NOTIMPLEMENTED[0m
+Feb 04 06:36:48 cv4398397.novalocal systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mflask_app.service: Failed with result 'exit-code'.[0m

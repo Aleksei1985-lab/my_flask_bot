@@ -1,0 +1,18 @@
+<h1>Редактирование пользователя</h1>
+
+<form method="POST">
+    <div>
+        <label for="username">Имя пользователя:</label>
+        <input type="text" name="username" value="{{ user.username }}" required>
+    </div>
+    <div>
+        <label for="role">Роль:</label>
+        <select name="role" required>
+            <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Администратор</option>
+            <option value="superuser" {% if user.role == 'superuser' %}selected{% endif %}>Суперпользователь</option>
+        </select>
+    </div>
+    <button type="submit">Сохранить изменения</button>
+</form>
+
+<a href="{{ url_for('admin.manage_users') }}">Назад</a>

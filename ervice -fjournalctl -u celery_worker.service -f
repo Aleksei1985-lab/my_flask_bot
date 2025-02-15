@@ -1,0 +1,6 @@
+● celery_worker.service - Celery Worker
+     Loaded: loaded (]8;;file://cv4398397.novalocal/etc/systemd/system/celery_worker.service/etc/systemd/system/celery_worker.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: activating (auto-restart) (Result: exit-code) since Wed 2025-02-05 06:04:18 MSK; 739ms ago
+    Process: 759770 ExecStart=/root/my_flask_bot/venv/bin/celery -A app.celery worker --loglevel=info [0;1;31m(code=exited, status=2)[0m
+   Main PID: 759770 (code=exited, status=2)
+        CPU: 872ms

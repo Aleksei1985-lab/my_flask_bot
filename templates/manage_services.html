@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление услугами</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Услуги:</h1>
+        <form method="POST" class="form-inline mb-4">
+            <input type="text" name="name" placeholder="Наименование" class="form-control mr-2" required>
+            <input type="text" name="price" placeholder="Цена" class="form-control mr-2" required>
+            <input type="number" name="duration" placeholder="Длительность" class="form-control mr-2" required>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+        <a href="{{ url_for('admin.manage_appointments') }}" class="btn btn-dark">Назад</a>
+        <a href="{{ url_for('admin.logout') }}" class="btn btn-light">Выход</a>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Цена</th>
+                    <th>Длительность</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                <tr>
+                    <td>{{ service.id }}</td>
+                    <td>{{ service.name }}</td>
+                    <td>{{ service.price }}</td>
+                    <td>{{ service.duration }} мин.</td>
+                    <td>
+                        <a href="{{ url_for('admin.edit_service', service_id=service.id) }}" class="btn btn-info btn-sm">Редактировать</a>
+                        <form method="POST" action="{{ url_for('admin.delete_service', service_id=service.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">Нет доступных услуг</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

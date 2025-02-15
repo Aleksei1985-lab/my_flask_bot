@@ -1,0 +1,14 @@
+[0;1;31m×[0m celery.service - Celery Service
+     Loaded: loaded (]8;;file://cv4398397.novalocal/etc/systemd/system/celery.service/etc/systemd/system/celery.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;31mfailed[0m (Result: exit-code) since Mon 2025-02-10 09:49:34 MSK; 37s ago
+   Duration: 5ms
+    Process: 355160 ExecStart=/root/my_flask_bot/venv/bin/celery -A celery_app.celery worker --loglevel=info [0;1;31m(code=exited, status=200/CHDIR)[0m
+   Main PID: 355160 (code=exited, status=200/CHDIR)
+        CPU: 2ms
+
+Feb 10 09:49:34 cv4398397.novalocal systemd[1]: [0;1;39m[0;1;31m[0;1;39mcelery.service: Main process exited, code=exited, status=200/CHDIR[0m
+Feb 10 09:49:34 cv4398397.novalocal systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcelery.service: Failed with result 'exit-code'.[0m
+Feb 10 09:49:34 cv4398397.novalocal systemd[1]: celery.service: Scheduled restart job, restart counter is at 5.
+Feb 10 09:49:34 cv4398397.novalocal systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcelery.service: Start request repeated too quickly.[0m
+Feb 10 09:49:34 cv4398397.novalocal systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcelery.service: Failed with result 'exit-code'.[0m
+Feb 10 09:49:34 cv4398397.novalocal systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start celery.service - Celery Service.[0m

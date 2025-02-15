@@ -1,0 +1,12 @@
+[0;1;32m●[0m celery.service - Celery Worker
+     Loaded: loaded (]8;;file://cv4398397.novalocal/etc/systemd/system/celery.service/etc/systemd/system/celery.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;32mactive (running)[0m since Wed 2025-02-05 04:45:03 MSK; 274ms ago
+   Main PID: 755368 (celery)
+      Tasks: 1 (limit: 1126)
+     Memory: 26.3M (peak: 26.6M)
+        CPU: 251ms
+     CGroup: /system.slice/celery.service
+             └─[0;38;5;245m755368 /root/my_flask_bot/venv/bin/python3 /root/my_flask_bot/venv/bin/celery -A app.celery worker --loglevel=info[0m
+
+Feb 05 04:45:03 cv4398397.novalocal systemd[1]: celery.service: Scheduled restart job, restart counter is at 1.
+Feb 05 04:45:03 cv4398397.novalocal systemd[1]: Started celery.service - Celery Worker.

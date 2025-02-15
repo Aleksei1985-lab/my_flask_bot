@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать запись</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Редактирование записи</h1>
+    <form method="post">
+        <div>
+            <label for="client_id">Клиент:</label>
+            <select name="client_id" required>
+                {% for client in clients %}
+                    <option value="{{ client.id }}" {% if client.id == appointment.client_id %}selected{% endif %}>{{ client.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="date">Дата:</label>
+            <input type="date" name="date" value="{{ appointment.date }}" required>
+        </div>
+        <div>
+            <label for="time">Время:</label>
+            <input type="time" name="time" value="{{ appointment.time }}" required>
+        </div>
+        <button type="submit">Сохранить изменения</button>
+    </form>
+    <a href="{{ url_for('admin.manage_appointments') }}">Назад</a>
+</body>
+</html>

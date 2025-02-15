@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать пользователя</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Создание нового пользователя</h1>
+    <form method="post">
+        <div>
+            <label for="username">Имя пользователя:</label>
+            <input type="text" name="username" required>
+        </div>
+        <div>
+            <label for="password">Пароль:</label>
+            <input type="password" name="password" required>
+        </div>
+        <div>
+            <label for="role">Роль:</label>
+            <select name="role" required>
+                <option value="admin">Администратор</option>
+                <option value="superuser">Суперпользователь</option>
+            </select>
+        </div>
+        <button type="submit">Создать пользователя</button>
+    </form>
+    <a href="{{ url_for('auth.logout') }}">Выход</a>
+</body>
+</html>

@@ -1,0 +1,16 @@
+○ redis-server.service - Advanced key-value store
+     Loaded: loaded (]8;;file://cv4398397.novalocal/usr/lib/systemd/system/redis-server.service/usr/lib/systemd/system/redis-server.service]8;;; [0;1;38;5;185mdisabled[0m; preset: [0;1;32menabled[0m)
+     Active: inactive (dead)
+       Docs: ]8;;http://redis.io/documentation,http://redis.io/documentation,]8;;
+             ]8;;man:redis-server(1)man:redis-server(1)]8;;
+
+Feb 05 04:14:16 cv4398397.novalocal systemd[1]: Stopping redis-server.service - Advanced key-value store...
+Feb 05 04:14:16 cv4398397.novalocal systemd[1]: redis-server.service: Deactivated successfully.
+Feb 05 04:14:16 cv4398397.novalocal systemd[1]: Stopped redis-server.service - Advanced key-value store.
+Feb 05 04:14:16 cv4398397.novalocal systemd[1]: redis-server.service: Consumed 2min 27.769s CPU time, 3.6M memory peak, 0B memory swap peak.
+Feb 05 04:14:16 cv4398397.novalocal systemd[1]: Starting redis-server.service - Advanced key-value store...
+Feb 05 04:14:16 cv4398397.novalocal systemd[1]: Started redis-server.service - Advanced key-value store.
+Feb 05 06:41:48 cv4398397.novalocal systemd[1]: Stopping redis-server.service - Advanced key-value store...
+Feb 05 06:41:48 cv4398397.novalocal systemd[1]: redis-server.service: Deactivated successfully.
+Feb 05 06:41:48 cv4398397.novalocal systemd[1]: Stopped redis-server.service - Advanced key-value store.
+Feb 05 06:41:48 cv4398397.novalocal systemd[1]: redis-server.service: Consumed 14.529s CPU time, 5.3M memory peak, 0B memory swap peak.

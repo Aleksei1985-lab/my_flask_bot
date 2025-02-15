@@ -1,0 +1,15 @@
+[0;1;32m●[0m redis-server.service - Advanced key-value store
+     Loaded: loaded (]8;;file://cv4398397.novalocal/usr/lib/systemd/system/redis-server.service/usr/lib/systemd/system/redis-server.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;32mactive (running)[0m since Wed 2025-02-05 04:14:16 MSK; 52min ago
+       Docs: ]8;;http://redis.io/documentation,http://redis.io/documentation,]8;;
+             ]8;;man:redis-server(1)man:redis-server(1)]8;;
+   Main PID: 754059 (redis-server)
+     Status: "[0;1;36mReady to accept connections[0m"
+      Tasks: 5 (limit: 1126)
+     Memory: 3.8M (peak: 4.0M)
+        CPU: 5.461s
+     CGroup: /system.slice/redis-server.service
+             └─[0;38;5;245m754059 "/usr/bin/redis-server 0.0.0.0:6379"[0m
+
+Feb 05 04:14:16 cv4398397.novalocal systemd[1]: Starting redis-server.service - Advanced key-value store...
+Feb 05 04:14:16 cv4398397.novalocal systemd[1]: Started redis-server.service - Advanced key-value store.

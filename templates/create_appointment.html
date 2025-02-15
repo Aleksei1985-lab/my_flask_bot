@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание новой записи</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Создание новой записи</h1>
+    <form method="post">
+        <div>
+            <label for="client_id">Клиент:</label>
+            <select name="client_id" required>
+                {% for client in clients %}
+                    <option value="{{ client.id }}">{{ client.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="button" id="add-client">Добавить нового клиента</button>
+        </div>
+        <div>
+            <label for="date">Дата:</label>
+            <input type="date" name="date" required>
+        </div>
+        <div>
+            <label for="time">Время:</label>
+            <input type="time" name="time" required>
+        </div>
+        <div>
+            <label for="service_id">Услуга:</label>
+            <select name="service_id" required>
+                {% for key, service in services.items() %}
+                    <option value="{{ key }}">{{ service }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit">Создать запись</button>
+    </form>
+    <a href="{{ url_for('admin.manage_appointments') }}">Назад</a>
+
+    <script>
+        document.getElementById("add-client").addEventListener("click", function() {
+            var clientName = prompt("Введите имя клиента:");
+            var clientPhone = prompt("Введите номер телефона клиента:");
+
+            if (clientName && clientPhone) {
+                // Отправка AJAX-запроса для создания нового клиента
+                fetch("{{ url_for('admin.create_client') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ "name": clientName, "phone": clientPhone })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Клиент успешно добавлен!");
+                        location.reload(); // Перезагрузка страницы для обновления списка клиентов
+                    } else {
+                        alert("Ошибка при добавлении клиента.");
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление записями</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="admin-nav mb-4">
+            <a href="{{ url_for('admin.manage_appointments') }}" class="btn btn-primary">Записи</a>
+            <a href="{{ url_for('admin.manage_services') }}" class="btn btn-info">Услуги</a>
+            <a href="{{ url_for('admin.manage_users') }}" class="btn btn-warning">Пользователи</a>
+            <a href="{{ url_for('admin.logout') }}" class="btn btn-danger float-right">Выход</a>
+        </div>
+
+        <h2>Список записей</h2>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Клиент</th>
+                    <th>Телефон</th>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th>Услуга</th>
+                    <th>Длительность</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.id }}</td>
+                    <td>{{ appointment.client.name if appointment.client else 'Не указан' }}</td>
+                    <td>{{ appointment.client.phone if appointment.client else 'N/A' }}</td>
+                    <td>{{ appointment.date.strftime('%d.%m.%Y') if appointment.date else 'N/A' }}</td>
+                    <td>{{ appointment.time.strftime('%H:%M') if appointment.time else 'N/A' }}</td>
+                    <td>{{ appointment.service.name if appointment.service else 'Услуга удалена' }}</td>
+                    <td>{{ appointment.service.duration if appointment.service else 0 }} мин.</td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="{{ url_for('admin.edit_appointment', appointment_id=appointment.id) }}" 
+                               class="btn btn-sm btn-outline-primary">✏️</a>
+                            <form method="POST" 
+                                  action="{{ url_for('admin.delete_appointment', appointment_id=appointment.id) }}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">🗑️</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">Нет доступных записей</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

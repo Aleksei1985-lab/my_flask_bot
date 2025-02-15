@@ -1,0 +1,76 @@
+/* styles.css */
+.admin-nav {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.admin-nav .btn {
+    margin: 0 0.5rem 0.5rem 0;
+    min-width: 120px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+.form-row .mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+.shadow {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-group .btn {
+    margin: 0 3px;
+    padding: 0.25rem 0.5rem;
+}
+
+.btn {
+    margin: 10px;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Тень для таблицы */
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.btn-create, .btn-add-service {
+    background-color: #28a745; /* Добавить или создать */
+}
+
+.btn-manage, .btn-back {
+    background-color: #007bff; /* Управление */
+}
+
+.btn-edit {
+    background-color: #ffc107; /* Редактировать */
+}
+
+.btn-delete {
+    background-color: #dc3545; /* Удалить */
+}
+
+.btn-logout, .btn-create-user {
+    background-color: #6c757d; /* Общие кнопки */
+}
+
+.btn:hover {
+    opacity: 0.85;
+    transition: opacity 0.3s;
+}
