@@ -7,6 +7,7 @@ from models import Appointment
 from database import db
 from routes import send_message
 import pytz
+from sqlalchemy.orm.exc import StaleDataError
 import logging
 
 
@@ -18,14 +19,16 @@ def get_local_timezone():
 
 
 # В файле tasks.py
-@celery.task(name='tasks.send_24h_reminder')
+@celery.task(name='tasks.send_24h_reminder', autoretry_for=(StaleDataError,), max_retries=3)
 def send_24h_reminder(appointment_id):
     logger.info(f"[24h] Запуск задачи для записи {appointment_id}")
     with current_app.app_context():
         try:
+            db.session.expire_all()
+
             appointment = Appointment.query.get(appointment_id)
-            if not appointment:
-                logger.error(f"[24h] Запись {appointment_id} не найдена.")
+            if not appointment or appointment.confirmation_status != 'pending':
+                logger.error(f"[24h] Запись {appointment_id} неактуальна.")
                 return
             
             # Отправляем сообщение
@@ -42,7 +45,14 @@ def send_24h_reminder(appointment_id):
             appointment.reminder_task_id = task.id
             db.session.commit()
             logger.info(f"[24h] 1h задача запланирована: {task.id}")
-            
+
+        except StaleDataError as e:
+            logger.error(f"StaleDataError: {str(e)}. Перезагружаем запись...")
+            db.session.rollback()
+            fresh_appointment = Appointment.query.get(appointment_id)
+  
+            raise  # Автоповтор через Celery
+
         except Exception as e:
             logger.error(f"[24h] Ошибка: {str(e)}", exc_info=True)
             db.session.rollback()
@@ -51,6 +61,9 @@ def send_24h_reminder(appointment_id):
 def send_1h_reminder(appointment_id):
     logger.info(f"[1h] Запуск задачи для записи {appointment_id}")
     with current_app.app_context():
+        appointment = Appointment.query.get(appointment_id)
+        if not appointment or appointment.confirmation_status != 'pending':
+            return
         try:
             _send_reminder(appointment_id, 1)
         except Exception as e:
@@ -65,7 +78,7 @@ def _send_reminder(appointment_id, hours_until):
 
         # Проверка статуса перед отправкой
         if appointment.confirmation_status != 'pending':
-            logger.info(f"Запись {appointment_id} уже обработана.")
+            logger.info(f"Запись {appointment_id} уже обработана (статус: {appointment.confirmation_status}).")
             return
 
         # Корректное время с часовым поясом

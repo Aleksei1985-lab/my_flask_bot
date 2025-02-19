@@ -65,9 +65,10 @@ class Appointment(db.Model):
     __tablename__ = 'appointments'
     
     id = db.Column(db.Integer, primary_key=True)
-    version_id = db.Column(db.Integer, nullable=False)  # Для оптимистичной блокировки
+    version_id = db.Column(db.Integer, nullable=False, default=0)  # Для оптимистичной блокировки
     __mapper_args__ = {
-        "version_id_col": version_id
+        "version_id_col": version_id,
+        "version_id_generator": lambda v: (v or 0) +1
     }
     client_id = db.Column(Integer, ForeignKey('clients.id'), nullable=False, index=True)
     service_id = db.Column(Integer, ForeignKey('services.id'), nullable=False, index=True)

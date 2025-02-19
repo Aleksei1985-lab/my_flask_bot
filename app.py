@@ -19,7 +19,10 @@ def create_app():
 
     db.init_app(app)
     Migrate(app, db)
-
+    # from celery_app import make_celery
+    app.config['broker_url'] = 'redis://:1985@89.111.154.32:6379/0'
+    app.config['result_backend'] = 'redis://:1985@89.111.154.32:6379/0'
+    # celery = make_celery(app)
     login_manager = LoginManager(app)
     login_manager.login_view = 'auth.login'
 

@@ -1,5 +1,6 @@
 # config.py
 import os
+from dotenv import load_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from celery import Celery
@@ -9,6 +10,7 @@ db = SQLAlchemy()
 celery = Celery(__name__)  # Инициализация Celery глобально
 
 class Config:
+    load_dotenv()
     SECRET_KEY = os.getenv('SECRET_KEY', 'mysecret')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///site.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -26,8 +28,26 @@ class Config:
         'Authorization': f'Bearer {apiTokenInstance}'
     }
 
-    broker_url = os.getenv('BROKER_URL', 'amqp://aleksei:1985@89.111.154.32:5672//')
-    result_backend = os.getenv('RESULT_BACKEND', 'rpc://')
+    broker_url = os.getenv('CELERY_BROKER_URL', 'redis://:1985@89.111.154.32:6379/0')  # Изменено на нижний регистр
+    result_backend = os.getenv('CELERY_RESULT_BACKEND', 'redis://:1985@89.111.154.32:6379/0')  # Изменено на нижний регистр
+
+
+
+    
+    # Добавьте явное объявление ключей
+
+    # CELERY_BROKER_HEARTBEAT = 10
+    #     # Добавьте специфичные для Redis настройки
+    # CELERY_RESULT_BACKEND_TRANSPORT_OPTIONS = {
+    #     'global_keyprefix': 'celery_results',
+    #     'retry_policy': {
+    #         'timeout': 5.0
+    #     }
+    # }
+    # CELERY_BROKER_TRANSPORT_OPTIONS = {
+    #     'visibility_timeout': 3600,  # 1 час
+    #     'fanout_prefix': True
+    # }
 
     @staticmethod
     def init_app(app):

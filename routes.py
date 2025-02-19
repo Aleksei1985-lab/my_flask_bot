@@ -74,7 +74,7 @@ def send_info(client):
     info = (
         "Наш салон красоты:\n"
         "📍 Адрес: ул. Примерная, 123\n"
-        "🕒 Часы работы: 9:00-21:00\n"
+        "🕒 Часы работы: 9:00-18:00\n"
         "☎️ Телефон: +7 (999) 123-45-67\n"
         "🌟 10 лет успешной работы!"
     )
@@ -203,9 +203,18 @@ def format_slot(index, start_time, end_time):
 
 def schedule_reminders(appointment):
     from tasks import send_24h_reminder, send_1h_reminder
+    from celery_app import celery
+    from sqlalchemy.orm.exc import StaleDataError
+    # Отмена предыдущих задач
+    if appointment.reminder_task_id:
+        try:
+            celery.control.revoke(appointment.reminder_task_id, terminate=True)
+        except Exception as e:
+            logger.error(f"Ошибка отмены задачи {appointment.reminder_task_id}: {e}")
+
     local_tz = pytz.timezone('Asia/Sakhalin')
-    
     naive_datetime = datetime.combine(appointment.date, appointment.time)
+
     local_datetime = local_tz.localize(naive_datetime)
     reminder_24h = local_datetime - timedelta(hours=24)
     reminder_1h = local_datetime - timedelta(hours=1)
@@ -230,6 +239,15 @@ def schedule_reminders(appointment):
         logger.info("1h reminder scheduled.")
     else:
         logger.warning("Время для 1h напоминания прошло.")
+    try:
+        db.session.commit()
+    except StaleDataError:
+        db.session.rollback()
+        logger.warning("Конфликт версий. Перезагружаем запись...")
+        # Явное обновление объекта из БД
+        fresh_appointment = db.session.query(Appointment).get(appointment.id)
+        if fresh_appointment:
+            schedule_reminders(fresh_appointment)
 
 def process_time_selection(client, message):
     """Обработка выбора времени для записи."""
@@ -365,17 +383,17 @@ def handle_confirmation(client, message):
                 celery.control.revoke(appointment.reminder_task_id, terminate=True)
                 logger.info(f"Задача {appointment.reminder_task_id} отменена.")
             send_message(client.phone, "✅ Запись подтверждена! Ждем вас.")
+            db.session.commit()
+            reset_to_main_menu(client)
         
         elif message == '2':
-            db.session.delete(appointment)
-            send_message(client.phone, "❌ Запись отменена.")
+            show_cancellation_menu(client)
+            db.session.commit()
         
         else:
             send_message(client.phone, "⚠️ Пожалуйста, выберите '1' или '2'.")
             return
 
-        db.session.commit()
-        reset_to_main_menu(client)
 
     except Exception as e:
         logger.error(f"FATAL ERROR: {str(e)}", exc_info=True)
