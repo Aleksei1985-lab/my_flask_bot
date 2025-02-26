@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Редактировать мастера{% endblock %}
+
+{% block styles %}
+<style>
+    .admin-form {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .form-label {
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="admin-form">
+        <h2>Редактировать мастера</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="name" class="form-label">Имя мастера</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ master.name }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

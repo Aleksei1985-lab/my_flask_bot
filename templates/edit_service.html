@@ -1,35 +1,50 @@
-<h1>Редактирование услуги</h1>
+{% extends "base.html" %}
+{% block title %}Редактировать услугу{% endblock %}
 
-<!-- edit_service.html -->
-<form method="POST" class="bg-light p-4 rounded shadow">
-    <div class="form-group">
-        <label>Название услуги:</label>
-        <input type="text" name="name" value="{{ service.name }}" 
-               class="form-control" required>
-    </div>
-    
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label>Цена (руб):</label>
-            <input type="number" name="price" value="{{ service.price }}" 
-                   class="form-control" step="0.01" required>
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label>Длительность (мин):</label>
-            <input type="number" name="duration" value="{{ service.duration }}" 
-                   class="form-control" required>
-        </div>
-    </div>
+{% block styles %}
+<style>
+    .admin-form {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .form-label {
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
 
-    <div class="form-group">
-        <label>Описание:</label>
-        <textarea name="description" class="form-control" 
-                  rows="3">{{ service.description }}</textarea>
+{% block content %}
+<div class="container mt-5">
+    <div class="admin-form">
+        <h2>Редактировать услугу</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="name" class="form-label">Название</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ service.name }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Цена</label>
+                <input type="number" class="form-control" id="price" name="price" step="0.01" value="{{ service.price }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="duration" class="form-label">Длительность (мин)</label>
+                <input type="number" class="form-control" id="duration" name="duration" value="{{ service.duration }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="parent_service_id" class="form-label">Категория (если подуслуга)</label>
+                <select class="form-control" id="parent_service_id" name="parent_service_id">
+                    <option value="" {% if not service.parent_service_id %}selected{% endif %}>Нет (основная услуга)</option>
+                    {% for parent in parent_services %}
+                        <option value="{{ parent.id }}" {% if service.parent_service_id == parent.id %}selected{% endif %}>{{ parent.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
     </div>
-
-    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-    <a href="{{ url_for('admin.manage_services') }}" class="btn btn-secondary">
-        Отмена
-    </a>
-</form>
+</div>
+{% endblock %}

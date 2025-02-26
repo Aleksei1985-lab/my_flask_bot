@@ -3,11 +3,12 @@ from flask import Flask
 from config import Config
 from database import db
 from flask_migrate import Migrate
-from models import Schedule, User, Service, Master, Specialization
+from models import Schedule, Service, Master, Specialization, Client
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect
 import logging
 
-
+import os
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
@@ -20,24 +21,27 @@ def create_app():
     db.init_app(app)
     Migrate(app, db)
 
+    app.config['broker_url'] = 'redis://:1985@89.111.154.32:6379/0'
+    app.config['result_backend'] = 'redis://:1985@89.111.154.32:6379/0'
+
     login_manager = LoginManager(app)
     login_manager.login_view = 'auth.login'
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+        return Client.query.get(int(user_id))
 
     with app.app_context():
         db.create_all()
         initialize_services()
         update_schedule()
     
-        from routes import main_routes
-        from admin_routes import admin_routes
-        from auth_routes import auth_routes
-        app.register_blueprint(main_routes)
-        app.register_blueprint(admin_routes, url_prefix='/admin')
-        app.register_blueprint(auth_routes, url_prefix='/auth')
+    from routes import main_routes as whatsapp_routes  # существующая логика для WhatsApp
+    from admin_routes import admin_routes  # логика панели администратора
+    from web_routes import web_bp  # наш новый blueprint для веб-части
+    app.register_blueprint(whatsapp_routes, url_prefix='/whatsapp')
+    app.register_blueprint(admin_routes, url_prefix='/admin')
+    app.register_blueprint(web_bp)
 
 
     return app

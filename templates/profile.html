@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block styles %}
+<style>
+    .profile-section {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .table th {
+        background-color: #e9ecef;
+    }
+    .form-label {
+        font-weight: bold;
+    }
+    .btn-sm {
+        margin-left: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Мой профиль</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            <label class="form-label">Аватар</label>
+            <input type="file" class="form-control" name="avatar">
+            {% if current_user.avatar_url %}
+            <img src="{{ current_user.avatar_url }}" class="img-thumbnail mt-2" style="max-width: 200px;">
+            {% endif %}
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Имя</label>
+            <input type="text" class="form-control" name="name" 
+                   value="{{ current_user.name }}" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" 
+                   value="{{ current_user.email }}">
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Телефон</label>
+            <input type="tel" class="form-control" name="phone" 
+                   value="{{ current_user.phone }}" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Личный кабинет</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="alert alert-{{ messages[0][0] }}">
+                {{ messages[0][1] }}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Активные записи -->
+    <div class="profile-section">
+        <h3>Активные записи</h3>
+        {% if active_appointments %}
+            <ul class="list-group">
+            {% for appt in active_appointments %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ appt.service.name }} - {{ appt.master.name }} - {{ appt.date.strftime('%d.%m.%Y') }} {{ appt.time.strftime('%H:%M') }}
+                    <form method="POST" action="{{ url_for('main.cancel_appointment', appointment_id=appt.id) }}">
+                        {{ form.hidden_tag() }}
+                        <button type="submit" class="btn btn-danger btn-sm">Отменить</button>
+                    </form>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">У вас нет активных записей.</p>
+        {% endif %}
+    </div>
+
+    <!-- Статистика -->
+    <div class="profile-section">
+        <h3>Статистика посещений</h3>
+        {% if stats %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Мастер</th>
+                        <th>Услуга</th>
+                        <th>Количество посещений</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for stat in stats %}
+                    <tr>
+                        <td>{{ stat.master_name }}</td>
+                        <td>{{ stat.service_name }}</td>
+                        <td>{{ stat.visit_count }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-muted">Нет данных о посещениях.</p>
+        {% endif %}
+    </div>
+
+    <!-- Форма изменения данных -->
+    <div class="profile-section">
+        <h3>Изменение данных</h3>
+        <form method="POST" action="{{ url_for('main.profile') }}">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                <label for="username" class="form-label">Имя пользователя</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ current_user.username }}">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ current_user.email }}">
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Телефон</label>
+                <input type="text" class="form-control" id="phone" name="phone" value="{{ current_user.phone }}">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Новый пароль (оставьте пустым, если не хотите менять)</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

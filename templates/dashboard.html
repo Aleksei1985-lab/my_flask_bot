@@ -1,0 +1,26 @@
+<!-- templates/dashboard.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h1>Личный кабинет</h1>
+  
+  <h2>Мои записи</h2>
+  <ul>
+    {% for appointment in appointments %}
+      <li>
+        {{ appointment.date }} {{ appointment.time }} - {{ appointment.service.name }} с {{ appointment.master.name }}
+        <a href="{{ url_for('cancel_appointment', appointment_id=appointment.id) }}" class="btn btn-danger">Отменить</a>
+      </li>
+    {% endfor %}
+  </ul>
+  
+  <h2>Редактировать профиль</h2>
+  <form method="POST" action="{{ url_for('edit_profile') }}">
+    <!-- Форма редактирования профиля -->
+    <input type="text" name="username" value="{{ current_user.username }}" placeholder="Имя пользователя">
+    <input type="email" name="email" value="{{ current_user.email }}" placeholder="Email">
+    <input type="text" name="phone" value="{{ current_user.phone }}" placeholder="Телефон">
+    <button type="submit" class="btn btn-success">Сохранить</button>
+  </form>
+</div>
+{% endblock %}

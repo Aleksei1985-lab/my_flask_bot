@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Карусель с фото салона -->
+<div id="salonCarousel" class="carousel slide" data-ride="carousel" style="height: 25vh; overflow: hidden;">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{{ url_for('static', filename='salon1.jpg') }}" class="d-block w-100" alt="Салон 1" style="height: 25vh; object-fit: cover;">
+        </div>
+        <div class="carousel-item">
+            <img src="{{ url_for('static', filename='salon2.jpg') }}" class="d-block w-100" alt="Салон 2" style="height: 25vh; object-fit: cover;">
+        </div>
+        <div class="carousel-item">
+            <img src="{{ url_for('static', filename='salon3.jpg') }}" class="d-block w-100" alt="Салон 3" style="height: 25vh; object-fit: cover;">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-target="#salonCarousel" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Предыдущий</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-target="#salonCarousel" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Следующий</span>
+    </button>
+</div>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Добро пожаловать в наш салон красоты!</h1>
+
+    <!-- Кнопка записи через WhatsApp -->
+    <div class="text-center mb-4">
+        <a href="https://wa.me/79991234567" target="_blank" class="btn btn-success">
+            <i class="bi bi-whatsapp"></i> Записаться через WhatsApp
+        </a>
+    </div>
+
+    <!-- Услуги -->
+    <section id="services">
+        <h2 class="mb-3">Наши услуги</h2>
+        <div class="row">
+            {% for service in services %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ service.name }}</h5>
+                        <p class="card-text">
+                            <strong>Цена:</strong> {{ service.price }} руб.<br>
+                            <strong>Длительность:</strong> {{ service.duration }} мин.
+                        </p>
+                        <a href="{{ url_for('web.book_service', service_id=service.id) }}" class="btn btn-primary">
+                            Записаться
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Мастера -->
+    <section id="masters">
+        <h2 class="mb-3">Наши мастера</h2>
+        <div class="row">
+            {% for master in masters %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <!-- Фото мастера -->
+                    <img src="{{ url_for('static', filename=master.photo_url) }}" class="card-img-top" alt="{{ master.name }}" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ master.name }}</h5>
+                        <p class="card-text">
+                            <strong>Специализации:</strong>
+                            <ul>
+                                {% for spec in master.specializations %}
+                                <li>{{ spec.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Реклама -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Реклама</h2>
+            <p class="card-text">
+                Хотите разместить рекламу в нашем салоне? Свяжитесь с нами по телефону: +7 (999) 765-43-21.
+            </p>
+        </div>
+    </div>
+
+    <!-- Информация о салоне (внизу страницы) -->
+    <section id="about">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">О нас</h2>
+                <p class="card-text">
+                    Наш салон красоты предлагает широкий спектр услуг для вашего комфорта и красоты.
+                    Мы работаем с 2010 года и гордимся нашими мастерами и качеством услуг.
+                </p>
+                <p class="card-text">
+                    <strong>Адрес:</strong> ул. Примерная, 123<br>
+                    <strong>Телефон:</strong> +7 (999) 123-45-67<br>
+                    <strong>Часы работы:</strong> 9:00 - 21:00
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Скрипт для плавной прокрутки -->
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+{% endblock %}

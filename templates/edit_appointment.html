@@ -1,31 +1,61 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Редактировать запись</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <h1>Редактирование записи</h1>
-    <form method="post">
-        <div>
-            <label for="client_id">Клиент:</label>
-            <select name="client_id" required>
-                {% for client in clients %}
-                    <option value="{{ client.id }}" {% if client.id == appointment.client_id %}selected{% endif %}>{{ client.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div>
-            <label for="date">Дата:</label>
-            <input type="date" name="date" value="{{ appointment.date }}" required>
-        </div>
-        <div>
-            <label for="time">Время:</label>
-            <input type="time" name="time" value="{{ appointment.time }}" required>
-        </div>
-        <button type="submit">Сохранить изменения</button>
-    </form>
-    <a href="{{ url_for('admin.manage_appointments') }}">Назад</a>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Редактировать запись{% endblock %}
+
+{% block styles %}
+<style>
+    .admin-form {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .form-label {
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="admin-form">
+        <h2>Редактировать запись</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="user_id" class="form-label">Клиент</label>
+                <select class="form-control" id="user_id" name="user_id" required>
+                    {% for user in users %}
+                        <option value="{{ user.id }}" {% if user.id == appointment.user_id %}selected{% endif %}>{{ user.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="service_id" class="form-label">Услуга</label>
+                <select class="form-control" id="service_id" name="service_id" required>
+                    {% for service in services %}
+                        <option value="{{ service.id }}" {% if service.id == appointment.service_id %}selected{% endif %}>{{ service.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="master_id" class="form-label">Мастер</label>
+                <select class="form-control" id="master_id" name="master_id" required>
+                    {% for master in masters %}
+                        <option value="{{ master.id }}" {% if master.id == appointment.master_id %}selected{% endif %}>{{ master.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Дата</label>
+                <input type="date" class="form-control" id="date" name="date" value="{{ appointment.date.strftime('%Y-%m-%d') }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="time" class="form-label">Время</label>
+                <input type="time" class="form-control" id="time" name="time" value="{{ appointment.time.strftime('%H:%M') }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

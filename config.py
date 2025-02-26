@@ -7,10 +7,10 @@ from celery import Celery
 # Инициализация расширений
 db = SQLAlchemy()
 celery = Celery(__name__)  # Инициализация Celery глобально
-
+basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'mysecret')
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///site.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'instance', 'site.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {
         "pool_pre_ping": True,
@@ -26,8 +26,8 @@ class Config:
         'Authorization': f'Bearer {apiTokenInstance}'
     }
 
-    broker_url = os.getenv('BROKER_URL', 'amqp://aleksei:1985@89.111.154.32:5672//')
-    result_backend = os.getenv('RESULT_BACKEND', 'rpc://')
+    broker_url = os.getenv('CELERY_BROKER_URL', 'redis://:1985@89.111.154.32:6379/0')  # Изменено на нижний регистр
+    result_backend = os.getenv('CELERY_RESULT_BACKEND', 'redis://:1985@89.111.154.32:6379/0') 
 
     @staticmethod
     def init_app(app):

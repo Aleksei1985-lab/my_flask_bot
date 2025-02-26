@@ -1,0 +1,54 @@
+{% extends "admin/base_admin.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Управление рекламой</h2>
+    
+    <form method="POST">
+        <div class="mb-3">
+            <label>Заголовок</label>
+            <input type="text" name="title" class="form-control" required>
+        </div>
+        
+        <div class="mb-3">
+            <label>Текст</label>
+            <textarea name="content" class="form-control" rows="3"></textarea>
+        </div>
+        
+        <div class="mb-3">
+            <label>URL изображения</label>
+            <input type="url" name="image_url" class="form-control">
+        </div>
+        
+        <div class="mb-3 form-check">
+            <input type="checkbox" name="is_active" class="form-check-input">
+            <label class="form-check-label">Активен</label>
+        </div>
+        
+        <button type="submit" class="btn btn-success">Добавить баннер</button>
+    </form>
+
+    <h3 class="mt-5">Активные баннеры</h3>
+    <div class="row">
+        {% for ad in ads %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                {% if ad.image_url %}
+                <img src="{{ ad.image_url }}" class="card-img-top">
+                {% endif %}
+                <div class="card-body">
+                    <h5>{{ ad.title }}</h5>
+                    <p>{{ ad.content }}</p>
+                    <form action="{{ url_for('admin.delete_ad', ad_id=ad.id) }}" 
+                          method="POST">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Удалить
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

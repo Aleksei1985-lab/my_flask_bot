@@ -1,0 +1,25 @@
+<!-- Мастера -->
+<section id="masters">
+    <h2 class="mb-3">Наши мастера</h2>
+    <div class="row">
+        {% for master in masters %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <!-- Фото мастера -->
+                <img src="{{ master.photo_url }}" class="card-img-top" alt="{{ master.name }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ master.name }}</h5>
+                    <p class="card-text">
+                        <strong>Специализации:</strong>
+                        <ul>
+                            {% for spec in master.specializations %}
+                            <li>{{ spec.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

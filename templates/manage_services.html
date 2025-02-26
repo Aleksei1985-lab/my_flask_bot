@@ -1,28 +1,59 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Управление услугами</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h1>Услуги:</h1>
-        <form method="POST" class="form-inline mb-4">
-            <input type="text" name="name" placeholder="Наименование" class="form-control mr-2" required>
-            <input type="text" name="price" placeholder="Цена" class="form-control mr-2" required>
-            <input type="number" name="duration" placeholder="Длительность" class="form-control mr-2" required>
+{% extends "base.html" %}
+{% block title %}Управление услугами{% endblock %}
+
+{% block styles %}
+<style>
+    .admin-section {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .table th {
+        background-color: #e9ecef;
+    }
+    .form-label {
+        font-weight: bold;
+    }
+    .btn-sm {
+        margin-right: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="admin-section">
+        <h2>Управление услугами</h2>
+        <form method="POST" class="mb-4">
+            <div class="mb-3">
+                <label for="name" class="form-label">Название</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Цена</label>
+                <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+            </div>
+            <div class="mb-3">
+                <label for="duration" class="form-label">Длительность (мин)</label>
+                <input type="number" class="form-control" id="duration" name="duration" required>
+            </div>
+            <div class="mb-3">
+                <label for="parent_service_id" class="form-label">Категория (если подуслуга)</label>
+                <select class="form-control" id="parent_service_id" name="parent_service_id">
+                    <option value="">Нет (основная услуга)</option>
+                    {% for parent in parent_services %}
+                        <option value="{{ parent.id }}">{{ parent.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">Добавить</button>
         </form>
-        <a href="{{ url_for('admin.manage_appointments') }}" class="btn btn-dark">Назад</a>
-        <a href="{{ url_for('admin.logout') }}" class="btn btn-light">Выход</a>
-
-        <table class="table table-bordered">
+        <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Название</th>
+                    <th>Категория</th>
                     <th>Цена</th>
                     <th>Длительность</th>
                     <th>Действия</th>
@@ -31,24 +62,20 @@
             <tbody>
                 {% for service in services %}
                 <tr>
-                    <td>{{ service.id }}</td>
                     <td>{{ service.name }}</td>
+                    <td>{{ service.category }}</td>
                     <td>{{ service.price }}</td>
-                    <td>{{ service.duration }} мин.</td>
+                    <td>{{ service.duration }}</td>
                     <td>
-                        <a href="{{ url_for('admin.edit_service', service_id=service.id) }}" class="btn btn-info btn-sm">Редактировать</a>
+                        <a href="{{ url_for('admin.edit_service', service_id=service.id) }}" class="btn btn-sm btn-warning">Редактировать</a>
                         <form method="POST" action="{{ url_for('admin.delete_service', service_id=service.id) }}" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                            <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
                         </form>
                     </td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="5" class="text-center">Нет доступных услуг</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

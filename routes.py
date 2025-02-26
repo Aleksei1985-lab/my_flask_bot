@@ -1,12 +1,14 @@
-from flask import Blueprint, request, jsonify
+# routes.py
+from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash
 from sqlalchemy.orm import joinedload
 import requests
 from database import db
-from sqlalchemy import func
 
+from sqlalchemy import func
+from forms import RegistrationForm, LoginForm, UpdateProfileForm
 from models import Client, Appointment, Service, Schedule, Master
 from config import Config
-
+from flask_login import login_user, logout_user, login_required, current_user
 from celery.result import AsyncResult
 from datetime import datetime, timedelta, time
 import pytz
@@ -16,6 +18,15 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 main_routes = Blueprint('main', __name__)
+
+
+@main_routes.route('/appointments')
+@login_required
+def appointments():
+    # Ваш код для отображения записей
+    appointments = Appointment.query.filter_by(client_id=current_user.id).all()
+    return render_template('appointments.html', appointments=appointments)
+
 
 def get_day_in_russian(date):
     """Возвращает день недели на русском языке"""
@@ -202,8 +213,8 @@ def format_slot(index, start_time, end_time):
     return f"{index}. {start_time.strftime('%H:%M')} - {end_time.strftime('%H:%M')} ({duration_minutes} мин)"
 
 def schedule_reminders(appointment):
-    from tasks import send_24h_reminder, send_1h_reminder
-    local_tz = pytz.timezone('Asia/Sakhalin')
+    from tasks import send_24h_reminder, send_1h_reminder, get_local_timezone
+    local_tz = get_local_timezone()
     
     naive_datetime = datetime.combine(appointment.date, appointment.time)
     local_datetime = local_tz.localize(naive_datetime)
@@ -219,17 +230,38 @@ def schedule_reminders(appointment):
 
     now_utc = datetime.now(pytz.utc)
     
+    # Отменяем старую задачу, если она существует
+    if appointment.reminder_task_id:
+        logger.info(f"Отмена предыдущей задачи {appointment.reminder_task_id}")
+        result = AsyncResult(appointment.reminder_task_id)
+        if result.state != 'SUCCESS':
+            result.revoke(terminate=True)
+
+    # Планируем напоминание за 24 часа, если возможно
     if utc_24h > now_utc:
-        send_24h_reminder.apply_async(args=[appointment.id], eta=utc_24h)
-        logger.info("24h reminder scheduled.")
+        send_24h_reminder_task = send_24h_reminder.apply_async(
+            args=[appointment.id], 
+            eta=utc_24h, 
+            task_id=f"24h_reminder_{appointment.id}"
+        )
+        appointment.reminder_task_id = send_24h_reminder_task.id
+        logger.info(f"24h напоминание запланировано: {send_24h_reminder_task.id}")
     else:
         logger.warning("Время для 24h напоминания прошло.")
-    
-    if utc_1h > now_utc:
-        send_1h_reminder.apply_async(args=[appointment.id], eta=utc_1h)
-        logger.info("1h reminder scheduled.")
-    else:
-        logger.warning("Время для 1h напоминания прошло.")
+        # Планируем напоминание за 1 час, если оно ещё возможно и запись не подтверждена
+        if appointment.confirmation_status == 'pending' and utc_1h > now_utc:
+            send_1h_reminder_task = send_1h_reminder.apply_async(
+                args=[appointment.id], 
+                eta=utc_1h, 
+                task_id=f"1h_reminder_{appointment.id}"
+            )
+            appointment.reminder_task_id = send_1h_reminder_task.id
+            logger.info(f"1h напоминание запланировано: {send_1h_reminder_task.id}")
+        else:
+            logger.info("1h напоминание не запланировано: либо время прошло, либо запись подтверждена")
+
+    db.session.commit()
+
 
 def process_time_selection(client, message):
     """Обработка выбора времени для записи."""
@@ -342,39 +374,98 @@ def process_client_input(client, message):
 
 # В файле routes.py
 def handle_confirmation(client, message):
-    """Обработка подтверждения записи"""
     from celery_app import celery
     try:
-        # Ищем ВСЕ записи с pending статусом
+        # Обработка выбора отмены из проверки записей
+        if message == '1' and client.current_state == 'checking_appointments':
+            appointments = db.session.query(Appointment).filter(
+                Appointment.client_id == client.id,
+                Appointment.date >= datetime.now().date(),
+                Appointment.status.in_(['scheduled', 'confirmed'])
+            ).order_by(Appointment.date, Appointment.time).all()
+            
+            if not appointments:
+                send_message(client.phone, "❌ Нет активных записей для отмены.")
+                return reset_to_main_menu(client)
+
+            response = ["🔻 Выберите запись для отмены:"]
+            response += [f"{i+1}. {a.service.name} - {a.date.strftime('%d.%m.%Y')} - {a.time.strftime('%H:%M')}" 
+                         for i, a in enumerate(appointments)]
+            response.append("0. В главное меню")
+            send_message(client.phone, "\n".join(response))
+            client.current_state = 'cancelling_appointment'
+            db.session.commit()
+            return
+
+        # Обработка выбора записи для отмены
+        if client.current_state == 'cancelling_appointment' and message.isdigit():
+            if message == '0':
+                return reset_to_main_menu(client)
+            
+            appointments = db.session.query(Appointment).filter(
+                Appointment.client_id == client.id,
+                Appointment.date >= datetime.now().date(),
+                Appointment.status.in_(['scheduled', 'confirmed'])
+            ).order_by(Appointment.date, Appointment.time).all()
+            
+            choice = int(message) - 1
+            if 0 <= choice < len(appointments):
+                appointment = appointments[choice]
+                # Отзываем задачу перед удалением
+                if appointment.reminder_task_id:
+                    result = celery.AsyncResult(appointment.reminder_task_id)
+                    if result.state not in ['SUCCESS', 'REVOKED']:
+                        result.revoke(terminate=True)
+                        logger.info(f"Задача напоминания {appointment.reminder_task_id} отозвана перед отменой записи.")
+                db.session.delete(appointment)
+                db.session.commit()
+                send_message(client.phone, "✅ Запись успешно отменена! Время стало доступным для других клиентов.")
+                check_appointments(client)
+            else:
+                send_message(client.phone, "⚠️ Неверный выбор. Попробуйте снова.")
+            return
+
+        # Обработка подтверждения/отмены из напоминания
+        if client.current_state != 'awaiting_confirmation':
+            logger.warning(f"Клиент {client.phone} отправил '{message}', но состояние не awaiting_confirmation: {client.current_state}")
+            send_message(client.phone, "⚠️ Выберите действие из главного меню:")
+            return reset_to_main_menu(client)
+
         pending_appointments = [a for a in client.future_appointments 
-                               if a.confirmation_status == 'pending']
-        
+                                if a.confirmation_status == 'pending']
         if not pending_appointments:
             send_message(client.phone, "❌ Нет активных записей для подтверждения.")
             return reset_to_main_menu(client)
 
-        # Берем последнюю запись (самую актуальную)
         appointment = pending_appointments[-1]
         logger.info(f"Обработка подтверждения для записи {appointment.id}")
 
-        # Обработка подтверждения
         if message == '1':
             appointment.confirmation_status = 'confirmed'
-            # Отменяем ВСЕ задачи напоминаний
+            appointment.status = 'confirmed'
             if appointment.reminder_task_id:
-                celery.control.revoke(appointment.reminder_task_id, terminate=True)
-                logger.info(f"Задача {appointment.reminder_task_id} отменена.")
+                result = celery.AsyncResult(appointment.reminder_task_id)
+                if result.state not in ['SUCCESS', 'REVOKED']:
+                    result.revoke(terminate=True)
+                    logger.info(f"Задача напоминания {appointment.reminder_task_id} отозвана (подтверждение за 24 часа).")
+            db.session.commit()
             send_message(client.phone, "✅ Запись подтверждена! Ждем вас.")
         
         elif message == '2':
+            # Отзываем задачу перед удалением
+            if appointment.reminder_task_id:
+                result = celery.AsyncResult(appointment.reminder_task_id)
+                if result.state not in ['SUCCESS', 'REVOKED']:
+                    result.revoke(terminate=True)
+                    logger.info(f"Задача напоминания {appointment.reminder_task_id} отозвана перед отменой.")
             db.session.delete(appointment)
+            db.session.commit()
             send_message(client.phone, "❌ Запись отменена.")
         
         else:
             send_message(client.phone, "⚠️ Пожалуйста, выберите '1' или '2'.")
             return
 
-        db.session.commit()
         reset_to_main_menu(client)
 
     except Exception as e:
@@ -391,86 +482,82 @@ def create_appointment(client, selected_time):
         send_message(client.phone, "Ошибка: дата не выбрана. Пожалуйста, выберите дату.")
         return
     
-    service = Service.query.get(client.selected_service_id)
-    selected_master = Master.query.get(client.selected_master_id)
-    start_datetime = datetime.combine(client.selected_date, selected_time)
-    end_datetime = start_datetime + timedelta(minutes=service.duration)
+    try:
+        service = Service.query.get(client.selected_service_id)
+        selected_master = Master.query.get(client.selected_master_id)
+        start_datetime = datetime.combine(client.selected_date, selected_time)
+        end_datetime = start_datetime + timedelta(minutes=service.duration)
 
-    # Проверка наличия записи у клиента на выбранную дату
-    client_appointments = Appointment.query.filter_by(client_id=client.id, date=client.selected_date).all()
-    for app in client_appointments:
-        app_start = datetime.combine(app.date, app.time)
-        app_end = app_start + timedelta(minutes=app.service.duration)
-        # Если интервалы пересекаются
-        if not (end_datetime <= app_start or start_datetime >= app_end):
-            conflict_msg = (
-                "❌ На выбранное время у вас уже есть запись:\n"
-                f"{app.service.name} - {selected_master.name} - {app.date.strftime('%d.%m.%Y')} {app.time.strftime('%H:%M')}\n"
-                "Пожалуйста, проверьте ваши записи:"
-            )
-            send_message(client.phone, conflict_msg)
-            check_appointments(client)  # Показываем записи клиента
-            return  # Не продолжаем создание новой записи
-        
-    # Получаем все записи мастера на выбранную дату
-    appointments = Appointment.query.filter(
-        Appointment.date == client.selected_date,
-        Appointment.master_id == client.selected_master_id
-    ).all()
+        # Проверка наличия активных записей у клиента на выбранную дату
+        client_appointments = Appointment.query.filter(
+            Appointment.client_id == client.id,
+            Appointment.date == client.selected_date,
+            Appointment.status.in_(['scheduled', 'confirmed'])  # Только активные записи
+        ).all()
+        for app in client_appointments:
+            app_start = datetime.combine(app.date, app.time)
+            app_end = app_start + timedelta(minutes=app.service.duration)
+            if not (end_datetime <= app_start or start_datetime >= app_end):
+                conflict_msg = (
+                    "❌ На выбранное время у вас уже есть запись:\n"
+                    f"{app.service.name} - {selected_master.name} - {app.date.strftime('%d.%m.%Y')} {app.time.strftime('%H:%M')}\n"
+                    "Пожалуйста, проверьте ваши записи:"
+                )
+                send_message(client.phone, conflict_msg)
+                check_appointments(client)
+                return
 
-    # Проверяем, не пересекается ли новый интервал с существующими
-    for app in appointments:
-        app_start = datetime.combine(app.date, app.time)
-        app_end = app_start + timedelta(minutes=app.service.duration)
-        if not (end_datetime <= app_start or start_datetime >= app_end):
-            send_message(client.phone, "❌ Это время уже занято другим клиентом.")
-            return show_time_slots(client)
+        # Проверяем записи мастера на выбранную дату
+        master_appointments = Appointment.query.filter(
+            Appointment.date == client.selected_date,
+            Appointment.master_id == client.selected_master_id,
+            Appointment.status.in_(['scheduled', 'confirmed'])  # Только активные записи
+        ).all()
 
-    # Создаем новую запись
-    new_appointment = Appointment(
-        client_id=client.id,
-        service_id=client.selected_service_id,
-        master_id=client.selected_master_id,
-        date=client.selected_date,
-        time=selected_time,
-        status='scheduled',
-        confirmation_status='pending'
-    )
-    db.session.add(new_appointment)
-    db.session.commit()
+        for app in master_appointments:
+            app_start = datetime.combine(app.date, app.time)
+            app_end = app_start + timedelta(minutes=app.service.duration)
+            if not (end_datetime <= app_start or start_datetime >= app_end):
+                send_message(client.phone, "❌ Это время уже занято другим клиентом.")
+                return show_time_slots(client)
 
-    # Обновляем список занятых интервалов
-    appointments = Appointment.query.filter(
-        Appointment.date == client.selected_date,
-        Appointment.master_id == client.selected_master_id
-    ).all()
+        # Создаем новую запись
+        new_appointment = Appointment(
+            client_id=client.id,
+            service_id=client.selected_service_id,
+            master_id=client.selected_master_id,
+            date=client.selected_date,
+            time=selected_time,
+            status='scheduled',
+            confirmation_status='pending'
+        )
+        db.session.add(new_appointment)
+        db.session.commit()
 
-    busy_intervals = []
-    for app in appointments:
-        start = app.time.hour * 60 + app.time.minute
-        end = start + app.service.duration
-        busy_intervals.append({'start': start, 'end': end})
+        confirm_message = (
+            f"✅ Запись успешно создана!\n"
+            f"👨💼 Мастер: {selected_master.name}\n"
+            f"📅 Дата: {client.selected_date.strftime('%d.%m.%Y')}\n"
+            f"⏰ Время: {selected_time.strftime('%H:%M')}\n"
+            f"💈 Услуга: {service.name}"
+        )
+        send_message(client.phone, confirm_message)
+        logger.info(f"Сообщение подтверждения отправлено для записи {new_appointment.id}")
 
-    # Сортируем и объединяем интервалы
-    busy_sorted = sorted(busy_intervals, key=lambda x: x['start'])
-    merged = []
-    for interval in busy_sorted:
-        if not merged or interval['start'] > merged[-1]['end']:
-            merged.append(interval)
-        else:
-            merged[-1]['end'] = max(merged[-1]['end'], interval['end'])
+        try:
+            schedule_reminders(new_appointment)
+        except Exception as e:
+            logger.error(f"Ошибка при планировании напоминаний для записи {new_appointment.id}: {str(e)}")
+            send_message(client.phone, "⚠️ Произошла ошибка при планировании напоминаний.")
 
-    # Отправляем подтверждение клиенту
-    confirm_message = (
-        f"✅ Запись успешно создана!\n"
-        f"👨💼 Мастер: {selected_master.name}\n"
-        f"📅 Дата: {client.selected_date.strftime('%d.%m.%Y')}\n"
-        f"⏰ Время: {selected_time.strftime('%H:%M')}\n"
-        f"💈 Услуга: {service.name}"
-    )
-    send_message(client.phone, confirm_message)
-    schedule_reminders(new_appointment)
-    reset_to_main_menu(client)
+        client.current_state = 'active'
+        db.session.commit()
+        show_main_menu(client.phone)
+
+    except Exception as e:
+        logger.error(f"Ошибка при создании записи: {str(e)}", exc_info=True)
+        send_message(client.phone, "⚠️ Произошла ошибка. Пожалуйста, повторите попытку.")
+        db.session.rollback()
 
 def round_to_nearest_15_up(dt):
     """Округление времени вверх до ближайшего значения, кратного 15 минутам."""
@@ -591,15 +678,18 @@ def handle_menu_option(client, option):
 
 def check_appointments(client):
     """Показ активных записей клиента"""
+    # Сбрасываем кэш сессии для актуальных данных
+    db.session.expire_all()
+    
     # Используем правильный способ получения данных через SQLAlchemy
     appointments = db.session.query(Appointment).options(
         joinedload(Appointment.master),
         joinedload(Appointment.service)
     ).filter(
         Appointment.client_id == client.id,
-        Appointment.date >= datetime.now().date()
-    ).order_by(Appointment.date, Appointment.time  # Добавлена сортировка
-    ).all()
+        Appointment.date >= datetime.now().date(),
+        Appointment.status.in_(['scheduled', 'confirmed'])  # Только активные записи
+    ).order_by(Appointment.date, Appointment.time).all()
     
     if not appointments:
         send_message(client.phone, "❌ У вас нет активных записей")
@@ -607,7 +697,7 @@ def check_appointments(client):
         
     response = ["📅 Ваши записи🤗:"]
     response += [f"{i+1}. {a.service.name} - {a.master.name} - {a.date.strftime('%d.%m.%Y')} {a.time.strftime('%H:%M')}" 
-                for i, a in enumerate(appointments)]
+                 for i, a in enumerate(appointments)]
     response.append("\n0. Назад\n1. Отменить запись")
     
     send_message(client.phone, "\n".join(response))
@@ -716,12 +806,17 @@ def cancel_appointment(client, index):
 
 def reset_to_main_menu(client):
     """Сброс состояния и очистка временных данных"""
-    client.current_state = 'active'
-    client.selected_service_id = None
-    client.selected_date = None
-    client.next_week_start = 0
-    db.session.commit()
-    show_main_menu(str(client.phone))
+    try:
+        logger.info(f"Resetting to main menu for client {client.phone}")
+        client.current_state = 'active'
+        client.selected_service_id = None
+        client.selected_date = None
+        client.next_week_start = 0
+        db.session.commit()
+        logger.info(f"Client state reset. Showing main menu to {client.phone}")
+        show_main_menu(str(client.phone))  # Исправлено: убрана лишняя скобка
+    except Exception as e:
+        logger.error(f"Error in reset_to_main_menu: {str(e)}")
 
 # Остальные функции с улучшениями ↓
 

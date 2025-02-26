@@ -1,0 +1,15 @@
+○ redis-server.service - Advanced key-value store
+     Loaded: loaded (]8;;file://cv4398397.novalocal/usr/lib/systemd/system/redis-server.service/usr/lib/systemd/system/redis-server.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: inactive (dead) since Sun 2025-02-23 06:43:35 MSK; 3h 21min ago
+   Duration: 2min 4.597s
+       Docs: ]8;;http://redis.io/documentation,http://redis.io/documentation,]8;;
+             ]8;;man:redis-server(1)man:redis-server(1)]8;;
+   Main PID: 752 (code=exited, status=0/SUCCESS)
+     Status: "[0;1;36mSaving the final RDB snapshot[0m"
+        CPU: 197ms
+
+Feb 23 06:41:29 cv4398397.novalocal systemd[1]: Starting redis-server.service - Advanced key-value store...
+Feb 23 06:41:30 cv4398397.novalocal systemd[1]: Started redis-server.service - Advanced key-value store.
+Feb 23 06:43:35 cv4398397.novalocal systemd[1]: Stopping redis-server.service - Advanced key-value store...
+Feb 23 06:43:35 cv4398397.novalocal systemd[1]: redis-server.service: Deactivated successfully.
+Feb 23 06:43:35 cv4398397.novalocal systemd[1]: Stopped redis-server.service - Advanced key-value store.

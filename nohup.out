@@ -1,0 +1,564 @@
+[2025-02-25 12:53:19 +0300] [197514] [INFO] Starting gunicorn 23.0.0
+[2025-02-25 12:53:19 +0300] [197514] [INFO] Listening at: http://0.0.0.0:5000 (197514)
+[2025-02-25 12:53:19 +0300] [197514] [INFO] Using worker: sync
+[2025-02-25 12:53:19 +0300] [197515] [INFO] Booting worker with pid: 197515
+[2025-02-25 12:53:19 +0300] [197516] [INFO] Booting worker with pid: 197516
+/root/my_flask_bot/venv/lib/python3.12/site-packages/celery/platforms.py:829: SecurityWarning: You're running the worker with superuser privileges: this is
+absolutely not recommended!
+
+Please specify a different user using the --uid option.
+
+User information: uid=0 euid=0 gid=0 egid=0
+
+  warnings.warn(SecurityWarning(ROOT_DISCOURAGED.format(
+[2025-02-25 12:53:28,958: DEBUG/MainProcess] | Worker: Preparing bootsteps.
+[2025-02-25 12:53:28,961: DEBUG/MainProcess] | Worker: Building graph...
+[2025-02-25 12:53:28,961: DEBUG/MainProcess] | Worker: New boot order: {StateDB, Timer, Hub, Pool, Autoscaler, Beat, Consumer}
+[2025-02-25 12:53:28,970: DEBUG/MainProcess] | Consumer: Preparing bootsteps.
+[2025-02-25 12:53:28,970: DEBUG/MainProcess] | Consumer: Building graph...
+[2025-02-25 12:53:28,987: DEBUG/MainProcess] | Consumer: New boot order: {Connection, Events, Heart, Agent, Mingle, Tasks, Control, Gossip, event loop}
+instance/site.db exists
+instance/site.db is readable
+instance/site.db is writable
+CELERY_BROKER_URL: None
+ 
+ -------------- worker1@cv4398397.novalocal v5.4.0 (opalescent)
+--- ***** ----- 
+-- ******* ---- Linux-6.8.0-51-generic-x86_64-with-glibc2.39 2025-02-25 12:53:28
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         app:0x76d86d8e3470
+- ** ---------- .> transport:   redis://:**@89.111.154.32:6379/0
+- ** ---------- .> results:     redis://:**@89.111.154.32:6379/0
+- *** --- * --- .> concurrency: 1 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . celery.accumulate
+  . celery.backend_cleanup
+  . celery.chain
+  . celery.chord
+  . celery.chord_unlock
+  . celery.chunks
+  . celery.group
+  . celery.map
+  . celery.starmap
+  . tasks.check_confirmation
+  . tasks.cleanup_old_appointments
+  . tasks.send_1h_reminder
+  . tasks.send_24h_reminder
+
+[2025-02-25 12:53:29,003: DEBUG/MainProcess] | Worker: Starting Hub
+[2025-02-25 12:53:29,003: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 12:53:29,004: DEBUG/MainProcess] | Worker: Starting Pool
+[2025-02-25 12:53:29,139: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 12:53:29,140: DEBUG/MainProcess] | Worker: Starting Consumer
+[2025-02-25 12:53:29,143: DEBUG/MainProcess] | Consumer: Starting Connection
+[2025-02-25 12:53:29,179: INFO/MainProcess] Connected to redis://:**@89.111.154.32:6379/0
+[2025-02-25 12:53:29,179: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 12:53:29,179: DEBUG/MainProcess] | Consumer: Starting Events
+[2025-02-25 12:53:29,183: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 12:53:29,183: DEBUG/MainProcess] | Consumer: Starting Heart
+[2025-02-25 12:53:29,190: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 12:53:29,190: DEBUG/MainProcess] | Consumer: Starting Mingle
+[2025-02-25 12:53:29,190: INFO/MainProcess] mingle: searching for neighbors
+[2025-02-25 12:53:30,212: INFO/MainProcess] mingle: all alone
+[2025-02-25 12:53:30,213: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 12:53:30,213: DEBUG/MainProcess] | Consumer: Starting Tasks
+[2025-02-25 12:53:30,220: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 12:53:30,220: DEBUG/MainProcess] | Consumer: Starting Control
+[2025-02-25 12:53:30,228: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 12:53:30,228: DEBUG/MainProcess] | Consumer: Starting Gossip
+[2025-02-25 12:53:30,235: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 12:53:30,235: DEBUG/MainProcess] | Consumer: Starting event loop
+[2025-02-25 12:53:30,235: DEBUG/MainProcess] | Worker: Hub.register Pool...
+[2025-02-25 12:53:30,236: INFO/MainProcess] worker1@cv4398397.novalocal ready.
+[2025-02-25 12:53:30,237: DEBUG/MainProcess] basic.qos: prefetch_count->4
+INFO:routes:Обработка подтверждения для записи 13
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Обработка подтверждения для записи 13
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Resetting to main menu for client 79241908281@c.us
+INFO:routes:Client state reset. Showing main menu to 79241908281@c.us
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Resetting to main menu for client 79241908281@c.us
+INFO:routes:Client state reset. Showing main menu to 79241908281@c.us
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Доступные мастера для услуги Дизайн ногтей: ['Анна Иванова']
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Ввод пользователя (выбор мастера): '1'
+INFO:routes:Доступные мастера: ['Анна Иванова']
+INFO:routes:Выбран мастер: Анна Иванова (ID: 3)
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение подтверждения отправлено для записи 10
+INFO:routes:Запланированы напоминания для записи 10:
+INFO:routes:  Напоминание за 24 часа: 2025-02-24T22:00:00+00:00
+INFO:routes:  Напоминание за 1 час: 2025-02-25T21:00:00+00:00
+WARNING:routes:Время для 24h напоминания прошло.
+INFO:routes:1h напоминание запланировано: 1h_reminder_10
+[2025-02-25 12:55:21,315: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_10] received
+[2025-02-25 12:55:21,315: DEBUG/MainProcess] basic.qos: prefetch_count->5
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Доступные мастера для услуги Лазерная эпиляция: ['Елена Аксенова']
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Ввод пользователя (выбор мастера): '1'
+INFO:routes:Доступные мастера: ['Елена Аксенова']
+INFO:routes:Выбран мастер: Елена Аксенова (ID: 7)
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение подтверждения отправлено для записи 11
+INFO:routes:Запланированы напоминания для записи 11:
+INFO:routes:  Напоминание за 24 часа: 2025-02-25T10:00:00+00:00
+INFO:routes:  Напоминание за 1 час: 2025-02-26T09:00:00+00:00
+INFO:routes:24h напоминание запланировано: 24h_reminder_11
+[2025-02-25 12:56:13,438: INFO/MainProcess] Task tasks.send_24h_reminder[24h_reminder_11] received
+[2025-02-25 12:56:13,439: DEBUG/MainProcess] basic.qos: prefetch_count->6
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+[2025-02-25 13:00:00,001: DEBUG/MainProcess] TaskPool: Apply <function fast_trace_task at 0x76d86ecfb600> (args:('tasks.send_24h_reminder', '24h_reminder_11', {'lang': 'py', 'task': 'tasks.send_24h_reminder', 'id': '24h_reminder_11', 'shadow': None, 'eta': '2025-02-25T10:00:00+00:00', 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '24h_reminder_11', 'parent_id': None, 'argsrepr': '[11]', 'kwargsrepr': '{}', 'origin': 'gen197515@cv4398397.novalocal', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}, 'properties': {'correlation_id': '24h_reminder_11', 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'delivery_mode': 2, 'delivery_info': {'exchange': '', 'routing_key': 'celery'}, 'priority': 0, 'body_encoding': 'base64', 'delivery_tag': 'a5cac862-09cd-4405-97b7-8a94bd6da231'}, 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'correlation_id': '24h_reminder_11', 'hostname': 'worker1@cv4398397.novalocal', 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'args': [11],... kwargs:{})
+[2025-02-25 13:00:00,004: DEBUG/MainProcess] basic.qos: prefetch_count->5
+[2025-02-25 13:00:00,009: INFO/ForkPoolWorker-1] [24h] Запуск задачи для записи 11
+[2025-02-25 13:00:00,120: DEBUG/ForkPoolWorker-1] Starting new HTTPS connection (1): 1103.api.green-api.com:443
+[2025-02-25 13:00:00,201: DEBUG/ForkPoolWorker-1] https://1103.api.green-api.com:443 "POST /waInstance1103167173/SendMessage/451181b283214ba5905a601b4ced8ae4df054c00a9194e7c8a HTTP/1.1" 200 32
+[2025-02-25 13:00:00,203: INFO/ForkPoolWorker-1] Сообщение успешно отправлено в чат 79241908281@c.us.
+[2025-02-25 13:00:00,221: INFO/ForkPoolWorker-1] Напоминание за 24 часа отправлено для записи 11
+[2025-02-25 13:00:00,252: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-25 13:00:00,253: DEBUG/MainProcess] basic.qos: prefetch_count->6
+[2025-02-25 13:00:00,258: INFO/ForkPoolWorker-1] [24h] 1h задача запланирована: 1h_reminder_11
+[2025-02-25 13:00:00,260: INFO/ForkPoolWorker-1] Task tasks.send_24h_reminder[24h_reminder_11] succeeded in 0.2537709299940616s: None
+INFO:routes:Обработка подтверждения для записи 11
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Resetting to main menu for client 79241908281@c.us
+INFO:routes:Client state reset. Showing main menu to 79241908281@c.us
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+[2025-02-25 13:11:16 +0300] [197514] [CRITICAL] WORKER TIMEOUT (pid:197516)
+[2025-02-25 13:11:16 +0300] [197516] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 274, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 326, in read_line
+    self.get_data(unreader, buf)
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-02-25 13:11:16 +0300] [197516] [INFO] Worker exiting (pid: 197516)
+instance/site.db exists
+instance/site.db is readable
+instance/site.db is writable
+CELERY_BROKER_URL: None
+[2025-02-25 13:11:16 +0300] [198402] [INFO] Booting worker with pid: 198402
+[2025-02-25 13:56:39,762: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_10] received
+[2025-02-25 13:56:39,763: DEBUG/MainProcess] basic.qos: prefetch_count->7
+[2025-02-25 14:01:39,823: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-25 14:01:39,824: DEBUG/MainProcess] basic.qos: prefetch_count->8
+[2025-02-25 14:56:40,363: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_10] received
+[2025-02-25 14:56:40,363: DEBUG/MainProcess] basic.qos: prefetch_count->9
+[2025-02-25 15:01:40,403: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-25 15:01:40,404: DEBUG/MainProcess] basic.qos: prefetch_count->10
+
+Restarting celery worker (/root/my_flask_bot/venv/bin/celery -A celery_app.celery worker --loglevel=Debug -n worker1@%h)
+[2025-02-25 15:05:10,382: DEBUG/MainProcess] | Worker: Closing Hub...
+[2025-02-25 15:05:10,385: DEBUG/MainProcess] | Worker: Closing Pool...
+[2025-02-25 15:05:10,385: DEBUG/MainProcess] | Worker: Closing Consumer...
+[2025-02-25 15:05:10,385: DEBUG/MainProcess] | Worker: Stopping Consumer...
+[2025-02-25 15:05:10,386: DEBUG/MainProcess] | Consumer: Closing Connection...
+[2025-02-25 15:05:10,386: DEBUG/MainProcess] | Consumer: Closing Events...
+[2025-02-25 15:05:10,386: DEBUG/MainProcess] | Consumer: Closing Heart...
+[2025-02-25 15:05:10,386: DEBUG/MainProcess] | Consumer: Closing Mingle...
+[2025-02-25 15:05:10,386: DEBUG/MainProcess] | Consumer: Closing Tasks...
+[2025-02-25 15:05:10,386: DEBUG/MainProcess] | Consumer: Closing Control...
+[2025-02-25 15:05:10,386: DEBUG/MainProcess] | Consumer: Closing Gossip...
+[2025-02-25 15:05:10,386: DEBUG/MainProcess] | Consumer: Closing event loop...
+[2025-02-25 15:05:10,386: DEBUG/MainProcess] | Consumer: Stopping event loop...
+[2025-02-25 15:05:10,386: DEBUG/MainProcess] | Consumer: Stopping Gossip...
+[2025-02-25 15:05:10,399: DEBUG/MainProcess] | Consumer: Stopping Control...
+[2025-02-25 15:05:10,402: DEBUG/MainProcess] | Consumer: Stopping Tasks...
+[2025-02-25 15:05:10,403: DEBUG/MainProcess] Canceling task consumer...
+[2025-02-25 15:05:10,403: DEBUG/MainProcess] | Consumer: Stopping Mingle...
+[2025-02-25 15:05:10,403: DEBUG/MainProcess] | Consumer: Stopping Heart...
+[2025-02-25 15:05:10,405: DEBUG/MainProcess] | Consumer: Stopping Events...
+[2025-02-25 15:05:10,405: DEBUG/MainProcess] | Consumer: Stopping Connection...
+[2025-02-25 15:05:10,405: DEBUG/MainProcess] | Worker: Stopping Pool...
+[2025-02-25 15:05:10,405: DEBUG/MainProcess] | Worker: Stopping Hub...
+[2025-02-25 15:05:10,405: DEBUG/MainProcess] | Consumer: Shutdown Gossip...
+[2025-02-25 15:05:10,405: DEBUG/MainProcess] | Consumer: Shutdown Control...
+[2025-02-25 15:05:10,405: DEBUG/MainProcess] | Consumer: Shutdown Tasks...
+[2025-02-25 15:05:10,405: DEBUG/MainProcess] Canceling task consumer...
+[2025-02-25 15:05:10,405: DEBUG/MainProcess] Closing consumer channel...
+[2025-02-25 15:05:10,405: DEBUG/MainProcess] | Consumer: Shutdown Heart...
+[2025-02-25 15:05:10,405: DEBUG/MainProcess] | Consumer: Shutdown Events...
+[2025-02-25 15:05:10,407: DEBUG/MainProcess] | Consumer: Shutdown Connection...
+Restoring 2 unacknowledged message(s)
+
+
+/root/my_flask_bot/venv/lib/python3.12/site-packages/celery/platforms.py:829: SecurityWarning: You're running the worker with superuser privileges: this is
+absolutely not recommended!
+
+Please specify a different user using the --uid option.
+
+User information: uid=0 euid=0 gid=0 egid=0
+
+  warnings.warn(SecurityWarning(ROOT_DISCOURAGED.format(
+[2025-02-25 15:05:12,608: DEBUG/MainProcess] | Worker: Preparing bootsteps.
+[2025-02-25 15:05:12,610: DEBUG/MainProcess] | Worker: Building graph...
+[2025-02-25 15:05:12,610: DEBUG/MainProcess] | Worker: New boot order: {Timer, Hub, Pool, Autoscaler, Beat, StateDB, Consumer}
+[2025-02-25 15:05:12,618: DEBUG/MainProcess] | Consumer: Preparing bootsteps.
+[2025-02-25 15:05:12,618: DEBUG/MainProcess] | Consumer: Building graph...
+[2025-02-25 15:05:12,629: DEBUG/MainProcess] | Consumer: New boot order: {Connection, Events, Heart, Agent, Mingle, Tasks, Control, Gossip, event loop}
+instance/site.db exists
+instance/site.db is readable
+instance/site.db is writable
+CELERY_BROKER_URL: redis://:1985@89.111.154.32:6379/0
+ 
+ -------------- worker1@cv4398397.novalocal v5.4.0 (opalescent)
+--- ***** ----- 
+-- ******* ---- Linux-6.8.0-51-generic-x86_64-with-glibc2.39 2025-02-25 15:05:12
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         app:0x785e657d3020
+- ** ---------- .> transport:   redis://:**@89.111.154.32:6379/0
+- ** ---------- .> results:     redis://:**@89.111.154.32:6379/0
+- *** --- * --- .> concurrency: 1 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . celery.accumulate
+  . celery.backend_cleanup
+  . celery.chain
+  . celery.chord
+  . celery.chord_unlock
+  . celery.chunks
+  . celery.group
+  . celery.map
+  . celery.starmap
+  . tasks.check_confirmation
+  . tasks.cleanup_old_appointments
+  . tasks.send_1h_reminder
+  . tasks.send_24h_reminder
+
+[2025-02-25 15:05:12,639: DEBUG/MainProcess] | Worker: Starting Hub
+[2025-02-25 15:05:12,639: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 15:05:12,639: DEBUG/MainProcess] | Worker: Starting Pool
+[2025-02-25 15:05:12,705: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 15:05:12,705: DEBUG/MainProcess] | Worker: Starting Consumer
+[2025-02-25 15:05:12,706: DEBUG/MainProcess] | Consumer: Starting Connection
+[2025-02-25 15:05:12,732: INFO/MainProcess] Connected to redis://:**@89.111.154.32:6379/0
+[2025-02-25 15:05:12,732: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 15:05:12,732: DEBUG/MainProcess] | Consumer: Starting Events
+[2025-02-25 15:05:12,734: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 15:05:12,735: DEBUG/MainProcess] | Consumer: Starting Heart
+[2025-02-25 15:05:12,737: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 15:05:12,737: DEBUG/MainProcess] | Consumer: Starting Mingle
+[2025-02-25 15:05:12,737: INFO/MainProcess] mingle: searching for neighbors
+[2025-02-25 15:05:13,747: INFO/MainProcess] mingle: all alone
+[2025-02-25 15:05:13,748: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 15:05:13,748: DEBUG/MainProcess] | Consumer: Starting Tasks
+[2025-02-25 15:05:13,752: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 15:05:13,752: DEBUG/MainProcess] | Consumer: Starting Control
+[2025-02-25 15:05:13,756: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 15:05:13,756: DEBUG/MainProcess] | Consumer: Starting Gossip
+[2025-02-25 15:05:13,760: DEBUG/MainProcess] ^-- substep ok
+[2025-02-25 15:05:13,760: DEBUG/MainProcess] | Consumer: Starting event loop
+[2025-02-25 15:05:13,760: DEBUG/MainProcess] | Worker: Hub.register Pool...
+[2025-02-25 15:05:13,761: INFO/MainProcess] worker1@cv4398397.novalocal ready.
+[2025-02-25 15:05:13,761: DEBUG/MainProcess] basic.qos: prefetch_count->4
+[2025-02-25 15:05:13,764: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-25 15:05:13,765: DEBUG/MainProcess] basic.qos: prefetch_count->5
+[2025-02-25 15:05:13,766: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_10] received
+[2025-02-25 15:05:13,766: DEBUG/MainProcess] basic.qos: prefetch_count->6
+[2025-02-25 15:06:36 +0300] [197514] [INFO] Handling signal: hup
+[2025-02-25 15:06:36 +0300] [197514] [INFO] Hang up: Master
+[2025-02-25 15:06:36 +0300] [197514] [ERROR] Worker (pid:198402) was sent SIGHUP!
+[2025-02-25 15:06:36 +0300] [197514] [ERROR] Worker (pid:197515) was sent SIGHUP!
+[2025-02-25 15:06:36 +0300] [204787] [INFO] Booting worker with pid: 204787
+[2025-02-25 15:06:36 +0300] [204788] [INFO] Booting worker with pid: 204788
+[2025-02-25 16:06:43,306: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_10] received
+[2025-02-25 16:06:43,306: DEBUG/MainProcess] basic.qos: prefetch_count->7
+[2025-02-25 16:06:43,307: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-25 16:06:43,307: DEBUG/MainProcess] basic.qos: prefetch_count->8
+[2025-02-25 17:06:43,881: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-25 17:06:43,882: DEBUG/MainProcess] basic.qos: prefetch_count->9
+[2025-02-25 17:06:43,883: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_10] received
+[2025-02-25 17:06:43,883: DEBUG/MainProcess] basic.qos: prefetch_count->10
+[2025-02-25 18:06:44,452: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_10] received
+[2025-02-25 18:06:44,452: DEBUG/MainProcess] basic.qos: prefetch_count->11
+[2025-02-25 18:06:44,456: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-25 18:06:44,456: DEBUG/MainProcess] basic.qos: prefetch_count->12
+[2025-02-25 19:06:45,038: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-25 19:06:45,040: DEBUG/MainProcess] basic.qos: prefetch_count->13
+[2025-02-25 19:06:45,042: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_10] received
+[2025-02-25 19:06:45,043: DEBUG/MainProcess] basic.qos: prefetch_count->14
+[2025-02-25 20:06:45,622: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_10] received
+[2025-02-25 20:06:45,623: DEBUG/MainProcess] basic.qos: prefetch_count->15
+[2025-02-25 20:06:45,624: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-25 20:06:45,624: DEBUG/MainProcess] basic.qos: prefetch_count->16
+[2025-02-25 21:06:46,211: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-25 21:06:46,212: DEBUG/MainProcess] basic.qos: prefetch_count->17
+[2025-02-25 21:06:46,213: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_10] received
+[2025-02-25 21:06:46,213: DEBUG/MainProcess] basic.qos: prefetch_count->18
+[2025-02-25 22:06:46,833: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_10] received
+[2025-02-25 22:06:46,835: DEBUG/MainProcess] basic.qos: prefetch_count->19
+[2025-02-25 22:06:46,838: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-25 22:06:46,839: DEBUG/MainProcess] basic.qos: prefetch_count->20
+[2025-02-25 23:06:47,392: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-25 23:06:47,392: DEBUG/MainProcess] basic.qos: prefetch_count->21
+[2025-02-25 23:06:47,394: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_10] received
+[2025-02-25 23:06:47,394: DEBUG/MainProcess] basic.qos: prefetch_count->22
+[2025-02-26 00:00:00,001: DEBUG/MainProcess] TaskPool: Apply <function fast_trace_task at 0x785e66bf3600> (args:('tasks.send_1h_reminder', '1h_reminder_10', {'lang': 'py', 'task': 'tasks.send_1h_reminder', 'id': '1h_reminder_10', 'shadow': None, 'eta': '2025-02-25T21:00:00+00:00', 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '1h_reminder_10', 'parent_id': None, 'argsrepr': '[10]', 'kwargsrepr': '{}', 'origin': 'gen197515@cv4398397.novalocal', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}, 'redelivered': True, 'properties': {'correlation_id': '1h_reminder_10', 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'delivery_mode': 2, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'redelivered': True}, 'priority': 0, 'body_encoding': 'base64', 'delivery_tag': '9a301416-c33f-4f74-894b-c6ff7bb2d877'}, 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'correlation_id': '1h_reminder_10', 'hostname': 'worker1@cv4398397.novalocal', 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0,... kwargs:{})
+[2025-02-26 00:00:00,002: DEBUG/MainProcess] basic.qos: prefetch_count->13
+[2025-02-26 00:00:00,005: INFO/ForkPoolWorker-1] [1h] Запуск задачи для записи 10
+[2025-02-26 00:00:00,071: DEBUG/ForkPoolWorker-1] Starting new HTTPS connection (1): 1103.api.green-api.com:443
+[2025-02-26 00:00:00,164: DEBUG/ForkPoolWorker-1] https://1103.api.green-api.com:443 "POST /waInstance1103167173/SendMessage/451181b283214ba5905a601b4ced8ae4df054c00a9194e7c8a HTTP/1.1" 200 32
+[2025-02-26 00:00:00,165: INFO/ForkPoolWorker-1] Сообщение успешно отправлено в чат 79241908281@c.us.
+[2025-02-26 00:00:00,184: INFO/MainProcess] Task tasks.check_confirmation[check_confirmation_10] received
+[2025-02-26 00:00:00,184: DEBUG/MainProcess] basic.qos: prefetch_count->14
+[2025-02-26 00:00:00,189: INFO/ForkPoolWorker-1] [1h] check_confirmation запланирована для записи 10 на 2025-02-25T21:10:00.053497+00:00 с task_id: check_confirmation_10
+[2025-02-26 00:00:00,200: INFO/ForkPoolWorker-1] Напоминание за 1 часа отправлено для записи 10
+[2025-02-26 00:00:00,202: INFO/ForkPoolWorker-1] Task tasks.send_1h_reminder[1h_reminder_10] succeeded in 0.1987900170206558s: None
+[2025-02-26 00:00:00,203: DEBUG/MainProcess] TaskPool: Apply <function fast_trace_task at 0x785e66bf3600> (args:('tasks.send_1h_reminder', '1h_reminder_10', {'lang': 'py', 'task': 'tasks.send_1h_reminder', 'id': '1h_reminder_10', 'shadow': None, 'eta': '2025-02-25T21:00:00+00:00', 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '1h_reminder_10', 'parent_id': None, 'argsrepr': '[10]', 'kwargsrepr': '{}', 'origin': 'gen197515@cv4398397.novalocal', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}, 'redelivered': True, 'properties': {'correlation_id': '1h_reminder_10', 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'delivery_mode': 2, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'redelivered': True}, 'priority': 0, 'body_encoding': 'base64', 'delivery_tag': '9a301416-c33f-4f74-894b-c6ff7bb2d877'}, 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'correlation_id': '1h_reminder_10', 'hostname': 'worker1@cv4398397.novalocal', 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0,... kwargs:{})
+[2025-02-26 00:00:00,205: INFO/ForkPoolWorker-1] [1h] Запуск задачи для записи 10
+[2025-02-26 00:00:00,207: INFO/ForkPoolWorker-1] [1h] Напоминание для записи 10 уже отправлено.
+[2025-02-26 00:00:00,207: INFO/ForkPoolWorker-1] Task tasks.send_1h_reminder[1h_reminder_10] succeeded in 0.0024452699872199446s: None
+[2025-02-26 00:00:00,208: DEBUG/MainProcess] TaskPool: Apply <function fast_trace_task at 0x785e66bf3600> (args:('tasks.send_1h_reminder', '1h_reminder_10', {'lang': 'py', 'task': 'tasks.send_1h_reminder', 'id': '1h_reminder_10', 'shadow': None, 'eta': '2025-02-25T21:00:00+00:00', 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '1h_reminder_10', 'parent_id': None, 'argsrepr': '[10]', 'kwargsrepr': '{}', 'origin': 'gen197515@cv4398397.novalocal', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}, 'redelivered': True, 'properties': {'correlation_id': '1h_reminder_10', 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'delivery_mode': 2, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'redelivered': True}, 'priority': 0, 'body_encoding': 'base64', 'delivery_tag': '9a301416-c33f-4f74-894b-c6ff7bb2d877'}, 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'correlation_id': '1h_reminder_10', 'hostname': 'worker1@cv4398397.novalocal', 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0,... kwargs:{})
+[2025-02-26 00:00:00,209: INFO/ForkPoolWorker-1] [1h] Запуск задачи для записи 10
+[2025-02-26 00:00:00,210: INFO/ForkPoolWorker-1] [1h] Напоминание для записи 10 уже отправлено.
+[2025-02-26 00:00:00,211: INFO/ForkPoolWorker-1] Task tasks.send_1h_reminder[1h_reminder_10] succeeded in 0.0019058689940720797s: None
+[2025-02-26 00:00:00,211: DEBUG/MainProcess] TaskPool: Apply <function fast_trace_task at 0x785e66bf3600> (args:('tasks.send_1h_reminder', '1h_reminder_10', {'lang': 'py', 'task': 'tasks.send_1h_reminder', 'id': '1h_reminder_10', 'shadow': None, 'eta': '2025-02-25T21:00:00+00:00', 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '1h_reminder_10', 'parent_id': None, 'argsrepr': '[10]', 'kwargsrepr': '{}', 'origin': 'gen197515@cv4398397.novalocal', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}, 'redelivered': True, 'properties': {'correlation_id': '1h_reminder_10', 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'delivery_mode': 2, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'redelivered': True}, 'priority': 0, 'body_encoding': 'base64', 'delivery_tag': '9a301416-c33f-4f74-894b-c6ff7bb2d877'}, 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'correlation_id': '1h_reminder_10', 'hostname': 'worker1@cv4398397.novalocal', 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0,... kwargs:{})
+[2025-02-26 00:00:00,212: INFO/ForkPoolWorker-1] [1h] Запуск задачи для записи 10
+[2025-02-26 00:00:00,213: INFO/ForkPoolWorker-1] [1h] Напоминание для записи 10 уже отправлено.
+[2025-02-26 00:00:00,214: INFO/ForkPoolWorker-1] Task tasks.send_1h_reminder[1h_reminder_10] succeeded in 0.0017567769973538816s: None
+[2025-02-26 00:00:00,214: DEBUG/MainProcess] TaskPool: Apply <function fast_trace_task at 0x785e66bf3600> (args:('tasks.send_1h_reminder', '1h_reminder_10', {'lang': 'py', 'task': 'tasks.send_1h_reminder', 'id': '1h_reminder_10', 'shadow': None, 'eta': '2025-02-25T21:00:00+00:00', 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '1h_reminder_10', 'parent_id': None, 'argsrepr': '[10]', 'kwargsrepr': '{}', 'origin': 'gen197515@cv4398397.novalocal', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}, 'redelivered': True, 'properties': {'correlation_id': '1h_reminder_10', 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'delivery_mode': 2, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'redelivered': True}, 'priority': 0, 'body_encoding': 'base64', 'delivery_tag': '9a301416-c33f-4f74-894b-c6ff7bb2d877'}, 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'correlation_id': '1h_reminder_10', 'hostname': 'worker1@cv4398397.novalocal', 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0,... kwargs:{})
+[2025-02-26 00:00:00,215: INFO/ForkPoolWorker-1] [1h] Запуск задачи для записи 10
+[2025-02-26 00:00:00,216: INFO/ForkPoolWorker-1] [1h] Напоминание для записи 10 уже отправлено.
+[2025-02-26 00:00:00,216: INFO/ForkPoolWorker-1] Task tasks.send_1h_reminder[1h_reminder_10] succeeded in 0.001702331006526947s: None
+[2025-02-26 00:00:00,217: DEBUG/MainProcess] TaskPool: Apply <function fast_trace_task at 0x785e66bf3600> (args:('tasks.send_1h_reminder', '1h_reminder_10', {'lang': 'py', 'task': 'tasks.send_1h_reminder', 'id': '1h_reminder_10', 'shadow': None, 'eta': '2025-02-25T21:00:00+00:00', 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '1h_reminder_10', 'parent_id': None, 'argsrepr': '[10]', 'kwargsrepr': '{}', 'origin': 'gen197515@cv4398397.novalocal', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}, 'redelivered': True, 'properties': {'correlation_id': '1h_reminder_10', 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'delivery_mode': 2, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'redelivered': True}, 'priority': 0, 'body_encoding': 'base64', 'delivery_tag': '9a301416-c33f-4f74-894b-c6ff7bb2d877'}, 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'correlation_id': '1h_reminder_10', 'hostname': 'worker1@cv4398397.novalocal', 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0,... kwargs:{})
+[2025-02-26 00:00:00,218: INFO/ForkPoolWorker-1] [1h] Запуск задачи для записи 10
+[2025-02-26 00:00:00,219: INFO/ForkPoolWorker-1] [1h] Напоминание для записи 10 уже отправлено.
+[2025-02-26 00:00:00,219: INFO/ForkPoolWorker-1] Task tasks.send_1h_reminder[1h_reminder_10] succeeded in 0.0017020019877236336s: None
+[2025-02-26 00:00:00,219: DEBUG/MainProcess] TaskPool: Apply <function fast_trace_task at 0x785e66bf3600> (args:('tasks.send_1h_reminder', '1h_reminder_10', {'lang': 'py', 'task': 'tasks.send_1h_reminder', 'id': '1h_reminder_10', 'shadow': None, 'eta': '2025-02-25T21:00:00+00:00', 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '1h_reminder_10', 'parent_id': None, 'argsrepr': '[10]', 'kwargsrepr': '{}', 'origin': 'gen197515@cv4398397.novalocal', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}, 'redelivered': True, 'properties': {'correlation_id': '1h_reminder_10', 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'delivery_mode': 2, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'redelivered': True}, 'priority': 0, 'body_encoding': 'base64', 'delivery_tag': '9a301416-c33f-4f74-894b-c6ff7bb2d877'}, 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'correlation_id': '1h_reminder_10', 'hostname': 'worker1@cv4398397.novalocal', 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0,... kwargs:{})
+[2025-02-26 00:00:00,220: INFO/ForkPoolWorker-1] [1h] Запуск задачи для записи 10
+[2025-02-26 00:00:00,221: INFO/ForkPoolWorker-1] [1h] Напоминание для записи 10 уже отправлено.
+[2025-02-26 00:00:00,222: INFO/ForkPoolWorker-1] Task tasks.send_1h_reminder[1h_reminder_10] succeeded in 0.0017412060115020722s: None
+[2025-02-26 00:00:00,222: DEBUG/MainProcess] TaskPool: Apply <function fast_trace_task at 0x785e66bf3600> (args:('tasks.send_1h_reminder', '1h_reminder_10', {'lang': 'py', 'task': 'tasks.send_1h_reminder', 'id': '1h_reminder_10', 'shadow': None, 'eta': '2025-02-25T21:00:00+00:00', 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '1h_reminder_10', 'parent_id': None, 'argsrepr': '[10]', 'kwargsrepr': '{}', 'origin': 'gen197515@cv4398397.novalocal', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}, 'redelivered': True, 'properties': {'correlation_id': '1h_reminder_10', 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'delivery_mode': 2, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'redelivered': True}, 'priority': 0, 'body_encoding': 'base64', 'delivery_tag': '9a301416-c33f-4f74-894b-c6ff7bb2d877'}, 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'correlation_id': '1h_reminder_10', 'hostname': 'worker1@cv4398397.novalocal', 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0,... kwargs:{})
+[2025-02-26 00:00:00,223: INFO/ForkPoolWorker-1] [1h] Запуск задачи для записи 10
+[2025-02-26 00:00:00,224: INFO/ForkPoolWorker-1] [1h] Напоминание для записи 10 уже отправлено.
+[2025-02-26 00:00:00,225: INFO/ForkPoolWorker-1] Task tasks.send_1h_reminder[1h_reminder_10] succeeded in 0.0016377590072806925s: None
+[2025-02-26 00:00:00,225: DEBUG/MainProcess] TaskPool: Apply <function fast_trace_task at 0x785e66bf3600> (args:('tasks.send_1h_reminder', '1h_reminder_10', {'lang': 'py', 'task': 'tasks.send_1h_reminder', 'id': '1h_reminder_10', 'shadow': None, 'eta': '2025-02-25T21:00:00+00:00', 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '1h_reminder_10', 'parent_id': None, 'argsrepr': '[10]', 'kwargsrepr': '{}', 'origin': 'gen197515@cv4398397.novalocal', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}, 'redelivered': True, 'properties': {'correlation_id': '1h_reminder_10', 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'delivery_mode': 2, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'redelivered': True}, 'priority': 0, 'body_encoding': 'base64', 'delivery_tag': '9a301416-c33f-4f74-894b-c6ff7bb2d877'}, 'reply_to': '563a59a2-e908-3d6e-a2f8-35f5d5f956d5', 'correlation_id': '1h_reminder_10', 'hostname': 'worker1@cv4398397.novalocal', 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0,... kwargs:{})
+[2025-02-26 00:00:00,226: INFO/ForkPoolWorker-1] [1h] Запуск задачи для записи 10
+[2025-02-26 00:00:00,227: INFO/ForkPoolWorker-1] [1h] Напоминание для записи 10 уже отправлено.
+[2025-02-26 00:00:00,228: INFO/ForkPoolWorker-1] Task tasks.send_1h_reminder[1h_reminder_10] succeeded in 0.0017152090149465948s: None
+[2025-02-26 00:06:47,924: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-26 00:06:47,925: DEBUG/MainProcess] basic.qos: prefetch_count->15
+[2025-02-26 00:10:00,054: DEBUG/MainProcess] TaskPool: Apply <function fast_trace_task at 0x785e66bf3600> (args:('tasks.check_confirmation', 'check_confirmation_10', {'lang': 'py', 'task': 'tasks.check_confirmation', 'id': 'check_confirmation_10', 'shadow': None, 'eta': '2025-02-25T21:10:00.053497+00:00', 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '1h_reminder_10', 'parent_id': '1h_reminder_10', 'argsrepr': '[10]', 'kwargsrepr': '{}', 'origin': 'gen204731@cv4398397.novalocal', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}, 'properties': {'correlation_id': 'check_confirmation_10', 'reply_to': 'ebebc6fd-3a02-3ef1-b424-8726a69195d1', 'delivery_mode': 2, 'delivery_info': {'exchange': '', 'routing_key': 'celery'}, 'priority': 0, 'body_encoding': 'base64', 'delivery_tag': '1972e239-cffa-4d6e-b506-0b98f6a4aa75'}, 'reply_to': 'ebebc6fd-3a02-3ef1-b424-8726a69195d1', 'correlation_id': 'check_confirmation_10', 'hostname': 'worker1@cv4398397.novalocal', 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0,... kwargs:{})
+[2025-02-26 00:10:00,056: DEBUG/MainProcess] basic.qos: prefetch_count->14
+[2025-02-26 00:10:00,090: DEBUG/ForkPoolWorker-1] Starting new HTTPS connection (1): 1103.api.green-api.com:443
+[2025-02-26 00:10:00,164: DEBUG/ForkPoolWorker-1] https://1103.api.green-api.com:443 "POST /waInstance1103167173/SendMessage/451181b283214ba5905a601b4ced8ae4df054c00a9194e7c8a HTTP/1.1" 200 32
+[2025-02-26 00:10:00,164: INFO/ForkPoolWorker-1] Сообщение успешно отправлено в чат 79241908281@c.us.
+[2025-02-26 00:10:00,178: DEBUG/ForkPoolWorker-1] Starting new HTTPS connection (1): 1103.api.green-api.com:443
+[2025-02-26 00:10:00,262: DEBUG/ForkPoolWorker-1] https://1103.api.green-api.com:443 "POST /waInstance1103167173/SendMessage/451181b283214ba5905a601b4ced8ae4df054c00a9194e7c8a HTTP/1.1" 200 32
+[2025-02-26 00:10:00,262: INFO/ForkPoolWorker-1] Сообщение успешно отправлено в чат 79241908281@c.us.
+[2025-02-26 00:10:00,262: INFO/ForkPoolWorker-1] Запись 10 удалена из-за отсутствия подтверждения.
+[2025-02-26 00:10:00,266: INFO/ForkPoolWorker-1] Task tasks.check_confirmation[check_confirmation_10] succeeded in 0.2078437699819915s: None
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+INFO:routes:Resetting to main menu for client 79241908281@c.us
+INFO:routes:Client state reset. Showing main menu to 79241908281@c.us
+INFO:routes:Сообщение успешно отправлено в чат 79241908281@c.us.
+[2025-02-26 01:06:48,412: INFO/MainProcess] Task tasks.send_1h_reminder[1h_reminder_11] received
+[2025-02-26 01:06:48,413: DEBUG/MainProcess] basic.qos: prefetch_count->15
+[2025-02-26 01:10:53,714: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/celery/worker/consumer/consumer.py", line 746, in start
+    c.loop(*c.loop_args())
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/kombu/asynchronous/hub.py", line 373, in create_loop
+    cb(*cbargs)
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/kombu/transport/redis.py", line 1352, in on_readable
+    self.cycle.on_readable(fileno)
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/kombu/transport/redis.py", line 569, in on_readable
+    chan.handlers[type]()
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/kombu/transport/redis.py", line 918, in _receive
+    ret.append(self._receive_one(c))
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/kombu/transport/redis.py", line 928, in _receive_one
+    response = c.parse_response()
+               ^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/client.py", line 865, in parse_response
+    response = self._execute(conn, try_read)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/client.py", line 841, in _execute
+    return conn.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/retry.py", line 65, in call_with_retry
+    fail(error)
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/client.py", line 843, in <lambda>
+    lambda error: self._disconnect_raise_connect(conn, error),
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/client.py", line 830, in _disconnect_raise_connect
+    raise error
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/client.py", line 842, in <lambda>
+    lambda: command(*args, **kwargs),
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/client.py", line 863, in try_read
+    return conn.read_response(disconnect_on_error=False, push_request=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/connection.py", line 592, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+  File "/root/my_flask_bot/venv/lib/python3.12/site-packages/redis/_parsers/socket.py", line 68, in _read_from_socket
+    raise ConnectionError(SERVER_CLOSED_CONNECTION_ERROR)
+redis.exceptions.ConnectionError: Connection closed by server.
+[2025-02-26 01:10:53,730: WARNING/MainProcess] /root/my_flask_bot/venv/lib/python3.12/site-packages/celery/worker/consumer/consumer.py:391: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered
+back to the queue. You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss
+setting. In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2025-02-26 01:10:53,730: DEBUG/MainProcess] | Consumer: Restarting event loop...
+[2025-02-26 01:10:53,730: DEBUG/MainProcess] | Consumer: Restarting Gossip...
+[2025-02-26 01:10:53,731: DEBUG/MainProcess] | Consumer: Restarting Control...
+[2025-02-26 01:10:53,731: DEBUG/MainProcess] | Consumer: Restarting Tasks...
+[2025-02-26 01:10:53,731: DEBUG/MainProcess] Canceling task consumer...
+[2025-02-26 01:10:53,731: DEBUG/MainProcess] | Consumer: Restarting Mingle...
+[2025-02-26 01:10:53,732: DEBUG/MainProcess] | Consumer: Restarting Heart...
+[2025-02-26 01:10:53,732: DEBUG/MainProcess] | Consumer: Restarting Events...
+[2025-02-26 01:10:53,732: DEBUG/MainProcess] | Consumer: Restarting Connection...
+[2025-02-26 01:10:53,733: DEBUG/MainProcess] | Consumer: Starting Connection
+[2025-02-26 01:10:53,734: ERROR/MainProcess] consumer: Cannot connect to redis://:**@89.111.154.32:6379/0: Error 111 connecting to 89.111.154.32:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+[2025-02-26 01:10:55,741: INFO/MainProcess] Connected to redis://:**@89.111.154.32:6379/0
+[2025-02-26 01:10:55,741: DEBUG/MainProcess] ^-- substep ok
+[2025-02-26 01:10:55,741: DEBUG/MainProcess] | Consumer: Starting Events
+[2025-02-26 01:10:55,745: DEBUG/MainProcess] ^-- substep ok
+[2025-02-26 01:10:55,745: DEBUG/MainProcess] | Consumer: Starting Heart
+[2025-02-26 01:10:55,746: DEBUG/MainProcess] ^-- substep ok
+[2025-02-26 01:10:55,746: DEBUG/MainProcess] | Consumer: Starting Mingle
+[2025-02-26 01:10:55,746: INFO/MainProcess] mingle: searching for neighbors
+[2025-02-26 01:10:56,752: INFO/MainProcess] mingle: all alone
+[2025-02-26 01:10:56,752: DEBUG/MainProcess] ^-- substep ok
+[2025-02-26 01:10:56,752: DEBUG/MainProcess] | Consumer: Starting Tasks
+[2025-02-26 01:10:56,755: DEBUG/MainProcess] ^-- substep ok
+[2025-02-26 01:10:56,755: DEBUG/MainProcess] | Consumer: Starting Control
+[2025-02-26 01:10:56,759: DEBUG/MainProcess] ^-- substep ok
+[2025-02-26 01:10:56,759: DEBUG/MainProcess] | Consumer: Starting Gossip
+[2025-02-26 01:10:56,763: DEBUG/MainProcess] ^-- substep ok
+[2025-02-26 01:10:56,763: DEBUG/MainProcess] | Consumer: Starting event loop
+[2025-02-26 01:10:56,763: DEBUG/MainProcess] | Worker: Hub.register Pool...
+[2025-02-26 01:10:56,764: DEBUG/MainProcess] basic.qos: prefetch_count->4
+
+worker: Warm shutdown (MainProcess)
+[2025-02-26 01:11:03,175: DEBUG/MainProcess] | Worker: Closing Hub...
+[2025-02-26 01:11:03,176: DEBUG/MainProcess] | Worker: Closing Pool...
+[2025-02-26 01:11:03,177: DEBUG/MainProcess] | Worker: Closing Consumer...
+[2025-02-26 01:11:03,177: DEBUG/MainProcess] | Worker: Stopping Consumer...
+[2025-02-26 01:11:03,177: DEBUG/MainProcess] | Consumer: Closing Connection...
+[2025-02-26 01:11:03,177: DEBUG/MainProcess] | Consumer: Closing Events...
+[2025-02-26 01:11:03,177: DEBUG/MainProcess] | Consumer: Closing Heart...
+[2025-02-26 01:11:03,177: DEBUG/MainProcess] | Consumer: Closing Mingle...
+[2025-02-26 01:11:03,177: DEBUG/MainProcess] | Consumer: Closing Tasks...
+[2025-02-26 01:11:03,178: DEBUG/MainProcess] | Consumer: Closing Control...
+[2025-02-26 01:11:03,178: DEBUG/MainProcess] | Consumer: Closing Gossip...
+[2025-02-26 01:11:03,178: DEBUG/MainProcess] | Consumer: Closing event loop...
+[2025-02-26 01:11:03,178: DEBUG/MainProcess] | Consumer: Stopping event loop...
+[2025-02-26 01:11:03,178: DEBUG/MainProcess] | Consumer: Stopping Gossip...
+[2025-02-26 01:11:03,182: DEBUG/MainProcess] | Consumer: Stopping Control...
+[2025-02-26 01:11:03,184: DEBUG/MainProcess] | Consumer: Stopping Tasks...
+[2025-02-26 01:11:03,184: DEBUG/MainProcess] Canceling task consumer...
+[2025-02-26 01:11:03,184: DEBUG/MainProcess] | Consumer: Stopping Mingle...
+[2025-02-26 01:11:03,184: DEBUG/MainProcess] | Consumer: Stopping Heart...
+[2025-02-26 01:11:03,185: DEBUG/MainProcess] | Consumer: Stopping Events...
+[2025-02-26 01:11:03,185: DEBUG/MainProcess] | Consumer: Stopping Connection...
+[2025-02-26 01:11:03,185: DEBUG/MainProcess] | Worker: Stopping Pool...
+[2025-02-26 01:11:03,186: DEBUG/MainProcess] | Worker: Stopping Hub...
+[2025-02-26 01:11:03,186: DEBUG/MainProcess] | Consumer: Shutdown Gossip...
+[2025-02-26 01:11:03,186: DEBUG/MainProcess] | Consumer: Shutdown Control...
+[2025-02-26 01:11:03,186: DEBUG/MainProcess] | Consumer: Shutdown Tasks...
+[2025-02-26 01:11:03,186: DEBUG/MainProcess] Canceling task consumer...
+[2025-02-26 01:11:03,186: DEBUG/MainProcess] Closing consumer channel...
+[2025-02-26 01:11:03,186: DEBUG/MainProcess] | Consumer: Shutdown Heart...
+[2025-02-26 01:11:03,186: DEBUG/MainProcess] | Consumer: Shutdown Events...
+[2025-02-26 01:11:03,186: DEBUG/MainProcess] | Consumer: Shutdown Connection...
+[2025-02-26 01:11:03,883: DEBUG/MainProcess] removing tasks from inqueue until task handler finished
+[2025-02-26 01:11:04,385: WARNING/MainProcess] Restoring 1 unacknowledged message(s)
+[2025-02-26 01:11:13 +0300] [197514] [INFO] Handling signal: term
+[2025-02-26 01:11:13 +0300] [204787] [INFO] Worker exiting (pid: 204787)
+[2025-02-26 01:11:13 +0300] [204788] [INFO] Worker exiting (pid: 204788)
+instance/site.db exists
+instance/site.db is readable
+instance/site.db is writable
+instance/site.db exists
+instance/site.db is readable
+instance/site.db is writable
+[2025-02-26 01:11:14 +0300] [197514] [INFO] Shutting down: Master
